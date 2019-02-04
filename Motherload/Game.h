@@ -17,7 +17,10 @@ public:
 	void update();
 	void render();
 	void clean();
-	
+	void printText(std::string text, int x, int y); // prints given text
+	void printText(std::string text, int font_size, int x, int y); // prints given text
+	void printMenu();
+
 	bool running() { return isRunning; };
 
 	static SDL_Renderer *renderer;

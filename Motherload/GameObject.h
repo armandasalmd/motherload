@@ -13,7 +13,9 @@ public:
 	void Update();
 	void Render();
 	void Step(const int dx, const int dy); // only for player object, it allow to move it
-	
+	int getX();
+	int getY();
+
 private:
 	int xpos;
 	int ypos;

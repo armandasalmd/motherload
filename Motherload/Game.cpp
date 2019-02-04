@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Map.h"
-
+#include "SDL_ttf.h"
 #include <iostream>
 
 Map *map;
@@ -23,6 +23,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
 	if (fullscreen) {
 		flags = SDL_WINDOW_FULLSCREEN;
+	}
+
+	if (TTF_Init() == -1) {
+		std::cout << "TTF init failed!" << std::endl;
+		isRunning = false;
 	}
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) { // success
@@ -48,6 +53,29 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	map = new Map();
 
 	player->Update(); // temp
+}
+
+void Game::printText(std::string text, int text_size, int x, int y) {
+	TTF_Font* font = TTF_OpenFont("Sans.ttf", text_size);
+	SDL_Color textColor = { 255, 255, 255, 0 };
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+	SDL_Texture* textt = SDL_CreateTextureFromSurface(renderer, textSurface);
+	int text_width = textSurface->w; // gets generated text width
+	int text_height = textSurface->h; // get generated text height
+	SDL_FreeSurface(textSurface);
+	SDL_Rect renderQuad = { x, y, text_width, text_height };
+	SDL_RenderCopy(renderer, textt, NULL, &renderQuad);
+	SDL_DestroyTexture(textt);
+}
+void Game::printText(std::string text, int x, int y) {
+	printText(text, Winfo::text_size, x, y); // function overload
+}
+
+void Game::printMenu() {
+	printText("Heha", 5, 0);
+	printText("Heha2", 5, Winfo::text_size);
+	std::string line3 = "x:" + std::to_string(player->getX()) + " y:" + std::to_string(player->getY());
+	printText(line3, 15, 5, Winfo::text_size * 2);
 }
 
 void Game::update() {
@@ -79,6 +107,7 @@ void Game::render() {
 	
 	map->DrawMap();
 	player->Render();
+	printMenu();
 
 	SDL_RenderPresent(renderer);
 }
@@ -96,12 +125,6 @@ void Game::handleEvents() {
 			x_key_pressed = '*';
 		if ((y_key_pressed == 'd' && key == 1073741905) || (y_key_pressed == 'u' && key == 1073741906))
 			y_key_pressed = '*';
-		//if (key == 1073741903 || key == 1073741904) { // left or right arrow pressed
-		//	x_key_pressed = '*';
-		//}		
-		//if (key == 1073741905 || key == 1073741906) { // top or bottom arrow pressed
-		//	y_key_pressed = '*';
-		//}
 	}
 	/* **** trenary operator possible for improvement **** */
 	if (ev.type == SDL_KEYDOWN) {
@@ -123,22 +146,6 @@ void Game::handleEvents() {
 			break;
 		}
 	}
-
-	//if (ev.key.keysym.sym > 1000) { // not alphabet char
-	//	int key = ev.key.keysym.sym - 1073741902;
-	//	if (key == 1) // arrow right
-	//		player->Step(Gsettings::step, 0);
-	//	else if (key == 2) // arrow left
-	//		player->Step(-Gsettings::step, 0);
-	//	else if (key == 3) // arrow down
-	//		player->Step(0, Gsettings::step);
-	//	else if (key == 4) // arrow up
-	//		player->Step(0, -Gsettings::step);
-	//}
-	//else if (ev.key.keysym.sym >= 97 && ev.key.keysym.sym <= 122) // smaller alphabet letters in ASCII
-	//	std::cout << (char)ev.key.keysym.sym << std::endl;
-	//else if (ev.key.keysym.sym >= 48 && ev.key.keysym.sym <= 57) // numbers in ASCII
-	//	std::cout << (char)ev.key.keysym.sym << std::endl;
 }
 
 void Game::clean() {

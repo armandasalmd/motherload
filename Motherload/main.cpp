@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 	game = new Game();
 	game->init(Winfo::title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		Winfo::width, Winfo::height, Winfo::full_screen); // init game window!
-
+	
 	while (game->running()) {
 		frameStart = SDL_GetTicks();
 

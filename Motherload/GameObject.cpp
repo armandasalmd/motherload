@@ -41,3 +41,11 @@ void GameObject::Render() {
 	SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 
 }
+
+int GameObject::getX() {
+	return xpos;
+}
+
+int GameObject::getY() {
+	return ypos;
+}

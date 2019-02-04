@@ -22,6 +22,8 @@ namespace {
 		static const int y_blocks = height / block_size; // blocks shown horizontally
 
 		static const bool full_screen = false;
+
+		static const int text_size = 22;
 	};
 
 	const std::string Winfo::title = "Motherload";
