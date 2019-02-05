@@ -4,9 +4,14 @@
 #include "Map.h"
 #include "SDL_ttf.h"
 #include <iostream>
+#include "TextureObject.h"
+#include "Player.h"
 
 Map *map;
-GameObject *player;
+GameObject *background;
+
+Player *player;
+
 SDL_Renderer *Game::renderer = nullptr;
 double gravity_speed = 0;
 
@@ -38,21 +43,25 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 			std::cout << "Window created!" << std::endl;
 		}
 
-		renderer = SDL_CreateRenderer(window, -1, 0);
+		renderer = SDL_CreateRenderer(window, 0, 0);
 		if (renderer) {
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
+
 		isRunning = true;
 	}
 	else {
 		isRunning = false;
 	}
+	background = new GameObject("assets/background.png", 0, 0);
+	background->SetDimentions(Winfo::width, Winfo::height);
+	background->Update();
 
-	player = new GameObject("assets/player.png", 0, 0);
-	map = new Map();
+	player = new Player("assets/player.png", 0, 0, false);
+	player->Update();
 
-	player->Update(); // temp
+	map = new Map();	
 }
 
 void Game::printText(std::string text, int text_size, int x, int y) {
@@ -66,16 +75,20 @@ void Game::printText(std::string text, int text_size, int x, int y) {
 	SDL_Rect renderQuad = { x, y, text_width, text_height };
 	SDL_RenderCopy(renderer, textt, NULL, &renderQuad);
 	SDL_DestroyTexture(textt);
+	TTF_CloseFont(font);
+	font = nullptr;
 }
 void Game::printText(std::string text, int x, int y) {
 	printText(text, Winfo::text_size, x, y); // function overload
 }
 
-void Game::printMenu() {
-	printText("Heha", 5, 0);
-	printText("Heha2", 5, Winfo::text_size);
-	std::string line3 = "x:" + std::to_string(player->getX()) + " y:" + std::to_string(player->getY());
-	printText(line3, 15, 5, Winfo::text_size * 2);
+void Game::printToolbar() {
+	printText("Health: 100hp", 5, 0);
+	printText("Fuel: 6l/10l", 5, Winfo::text_size);
+	printText("Money: 55£", 5, Winfo::text_size * 2);
+	int *mCord = Map::GetGridCordinates(player->getX() + Winfo::block_size / 2, player->getY() + Winfo::block_size / 2);
+	std::string line3 = "x:" + std::to_string(mCord[0]) + " y:" + std::to_string(mCord[1]);
+	printText(line3, 15, 5, Winfo::text_size * 3 + 5);
 }
 
 void Game::update() {
@@ -97,7 +110,7 @@ void Game::update() {
 		else
 			gravity_speed /= 2;
 
-	player->Step(move_x, move_y + (int)gravity_speed);
+	player->Move(move_x, move_y + (int)gravity_speed);
 
 	player->Update();
 }
@@ -105,9 +118,10 @@ void Game::update() {
 void Game::render() {
 	SDL_RenderClear(renderer);
 	
+	background->Render();
 	map->DrawMap();
 	player->Render();
-	printMenu();
+	printToolbar();
 
 	SDL_RenderPresent(renderer);
 }

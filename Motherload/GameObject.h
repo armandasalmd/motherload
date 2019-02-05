@@ -7,7 +7,6 @@ class GameObject {
 
 public:
 	GameObject(const char *texturesheet, int x, int y);
-	GameObject(const char *texturesheet, int x, int y, bool is_background);
 	~GameObject();
 	
 	void Update();
@@ -16,10 +15,15 @@ public:
 	int getX();
 	int getY();
 
+	void SetDimentions(const int w, const int h);
+
 private:
 	int xpos;
 	int ypos;
 	bool isBackground = true;
+
+	int width = Winfo::block_size;
+	int height = Winfo::block_size;
 
 	SDL_Texture *objTexture;
 	SDL_Rect srcRect, destRect;

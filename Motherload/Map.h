@@ -14,7 +14,8 @@ public:
 	void LoadMap(std::vector<std::vector<int>> m_map); // loads given map
 	void LoadMap(); // loads map creating new one
 	void DrawMap(); // shows MAP on the screen
-	
+	static int *GetGridCordinates(int x, int y);
+
 	void PrintMap(std::vector<std::vector<int>> m_map);
 
 private:

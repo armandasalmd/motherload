@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "TextureManager.h"
+#include <iostream>
 
 Map::Map() {
 	water = TextureManager::LoadTexture("assets/water.png"); // 1
@@ -39,7 +40,7 @@ void Map::DrawMap()
 
 			switch (type) {
 				case 1:
-					TextureManager::Draw(water, src, dest);
+					//TextureManager::Draw(water, src, dest);
 					break;
 				case 2:
 					TextureManager::Draw(grass, src, dest);
@@ -77,4 +78,14 @@ std::vector<std::vector<int>> Map::GenerateMap() {
 			new_map[y][x] = 3;
 
 	return new_map;
+}
+
+int *Map::GetGridCordinates(int x, int y) {
+	int *mArr = new int[2]{ -1, -1 };
+	if (Winfo::block_size != 0) {
+		mArr[0] = x / Winfo::block_size;
+		mArr[1] = y / Winfo::block_size;
+	}
+	// std::cout << mArr[0] << ", " << mArr[1] << std::endl;
+	return mArr;
 }

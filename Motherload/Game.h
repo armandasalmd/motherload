@@ -19,7 +19,7 @@ public:
 	void clean();
 	void printText(std::string text, int x, int y); // prints given text
 	void printText(std::string text, int font_size, int x, int y); // prints given text
-	void printMenu();
+	void printToolbar();
 
 	bool running() { return isRunning; };
 
@@ -31,6 +31,7 @@ private:
 
 	char x_key_pressed = '*'; // * - stand still, l - left, r - right
 	char y_key_pressed = '*'; // * - stand still, u - up, d - down
+
 };
 
 #endif /* Game_hpp */

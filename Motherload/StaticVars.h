@@ -29,7 +29,7 @@ namespace {
 	const std::string Winfo::title = "Motherload";
 	/* ________________________________________________ */
 
-	/* ___________________ Winfo ______________________ */
+	/* ___________________ Gsettings __________________ */
 	struct Gsettings {
 		// Game settings
 		static const int step = 4; // step size in px
@@ -37,9 +37,10 @@ namespace {
 		static const double max_gravity_speed;
 	};
 
-	const double Gsettings::gravity = 0.03;
+	const double Gsettings::gravity = 0;
 	const double Gsettings::max_gravity_speed = 4.8;
 	/* ________________________________________________ */
+
 }
 
 

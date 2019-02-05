@@ -7,20 +7,11 @@ GameObject::GameObject(const char *texturesheet, int x, int y) {
 	ypos = y;
 }
 
-GameObject::GameObject(const char *texturesheet, int x, int y, bool is_background) {
-	objTexture = TextureManager::LoadTexture(texturesheet);
-	xpos = x;
-	ypos = y;
-	isBackground = is_background;
-}
 
 void GameObject::Update() {
-	/* xpos++;
-	   ypos++; */
-
-	srcRect.h = Winfo::block_size;
-	srcRect.w = Winfo::block_size;
-	srcRect.x = 0;
+	srcRect.h = height;
+	srcRect.w = width;
+	srcRect.x = 0/*srcRect.w * static_cast<int>((SDL_GetTicks() / 250) % 4)*/;
 	srcRect.y = 0;
 
 	destRect.x = xpos;
@@ -37,9 +28,7 @@ void GameObject::Step(const int dx, const int dy) {
 
 
 void GameObject::Render() {
-
 	SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
-
 }
 
 int GameObject::getX() {
@@ -48,4 +37,10 @@ int GameObject::getX() {
 
 int GameObject::getY() {
 	return ypos;
+}
+
+
+void GameObject::SetDimentions(const int w, const int h) {
+	width = w;
+	height = h;
 }
