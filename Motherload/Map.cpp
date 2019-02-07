@@ -1,13 +1,13 @@
 #include "Map.h"
-#include "TextureManager.h"
-#include <iostream>
+#include "TextureManager.h"#include <fstream>
+#include <sstream>
 
 Map::Map() {
-	water = TextureManager::LoadTexture("assets/water.png"); // 1
-	grass = TextureManager::LoadTexture("assets/grass.png"); // 2
-	dirt = TextureManager::LoadTexture("assets/dirt.png"); // 3
-
-	LoadMap();	
+	// map initialization
+	LoadBlockPaths();
+	LoadMap("maps/map1.mp");
+	//PrintMap(map);
+	// ___________
 
 	src.x = src.y = 0;
 	dest.x = dest.y = 0;
@@ -15,17 +15,73 @@ Map::Map() {
 	src.h = dest.h = Winfo::block_size;
 }
 
-Map::~Map()
-{
+Map::~Map() {}
+
+void Map::LoadBlockPaths() {
+	std::ifstream fd;
+	fd.open(paths_file);
+	std::string folder = "";
+	std::string extention = "";
+	std::string temp;
+
+	if (fd.is_open()) {
+		fd >> folder >> folder;
+		fd >> extention >> extention;
+		while (!fd.eof()) {
+			fd >> temp;
+			block_paths.push_back(folder + temp + extention);
+		}
+	}
+	fd.close();
+	/*for (std::vector<std::string>::iterator it = begin(block_paths); it != end(block_paths); it = next(it))
+		std::cout << *it << std::endl;*/
 }
 
-void Map::LoadMap(std::vector<std::vector<int>> m_map) {
-	map = m_map;
+void Map::LoadMap(char *path) {
+	std::ifstream fd(path);
+	if (fd.is_open()) {
+		
+		std::string line = "";
+		int block = 0;
+		// Reference: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
+		try {
+			while (std::getline(fd, line)) {
+				std::stringstream ss;
+				ss << line;
+				std::vector<int> row = {};
+				for (int j = 0; j < WorldInfo::b_world_width; j++) {
+					ss >> block;
+					row.push_back(block);
+				}
+				map.push_back(row);
+				ss.str(""); // creating string stream
+			}
+		}
+		catch (const std::exception& e) {
+			std::cout << e.what();
+			std::cout << "\nMap must be: " << WorldInfo::b_world_width << "x" << WorldInfo::b_world_height << std::endl;
+		}
+		
+		// End reference;
+		fd.close();
+	}
 }
 
 void Map::LoadMap() { // generates new world
 	map = GenerateMap();
 	//PrintMap(map);
+}
+
+void Map::SaveMap(char *path) {
+	std::ofstream fr;
+	fr.open(path);
+	if (fr.is_open())
+		for (const std::vector<int> &v : map) {
+			for (int x : v)
+				fr << x << ' ';
+			fr << '\n';
+		}
+	fr.close();
 }
 
 void Map::DrawMap()
@@ -43,10 +99,10 @@ void Map::DrawMap()
 					//TextureManager::Draw(water, src, dest);
 					break;
 				case 2:
-					TextureManager::Draw(grass, src, dest);
+					//TextureManager::Draw(grass, src, dest);
 					break;
 				case 3:
-					TextureManager::Draw(dirt, src, dest);
+					//TextureManager::Draw(dirt, src, dest);
 					break;
 				default:
 					break;

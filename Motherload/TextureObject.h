@@ -12,16 +12,23 @@ public:
 	void Update();
 	void Render();
 	void Move(const int dx, const int dy); // moves texture on the screen
+	void SetDrawCoords(const int x, const int y);
+
+	void SetOffset(const int dx, const int dy); // camera ofset
+	void DeltaOffset(const int dx, const int dy); // move offset
+
 	void ChangeTexture(const char *path);
 	void SetDimentions(const int w, const int h);
 	int getX();
 	int getY();
 
-private:
-	int mx;
-	int my;
+protected:
+	int mx = 0;
+	int my = 0;
 	int width = Winfo::block_size;
 	int height = Winfo::block_size;
+	int offsetX = 0; // camera offset
+	int offsetY = 0; // camera offset
 
 	bool animated = false;
 	int anim_speed = 250;

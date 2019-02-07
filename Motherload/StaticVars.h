@@ -1,14 +1,13 @@
 #pragma once
 #include <string>
 
-
 namespace {
 	/* ___________________ Winfo ______________________ */
 	struct Winfo {
 		// window info, window settings(static)
 		static const std::string title;
 
-		static const int FPS = 60;
+		static const int FPS = 30;
 		static const int frameDelay = 1000 / FPS;
 
 		static const int block_size = 64; // width and height in pixels
@@ -23,7 +22,7 @@ namespace {
 
 		static const bool full_screen = false;
 
-		static const int text_size = 22;
+		static const int text_size = 22; // default text size
 	};
 
 	const std::string Winfo::title = "Motherload";
@@ -32,7 +31,10 @@ namespace {
 	/* ___________________ Gsettings __________________ */
 	struct Gsettings {
 		// Game settings
-		static const int step = 4; // step size in px
+		static const int spawn_x = 7;
+		static const int spawn_y = 3;
+
+		static const int step = 16; // step size in px
 		static const double gravity;
 		static const double max_gravity_speed;
 	};
@@ -41,6 +43,17 @@ namespace {
 	const double Gsettings::max_gravity_speed = 4.8;
 	/* ________________________________________________ */
 
+	/* ___________________ WorldInfo __________________ */
+	struct WorldInfo {
+		// measures in blocks
+		static const int b_sky_height = 5;
+		static const int b_world_width = 28; // TODO spelling mistake! change in all files
+		static const int b_world_height = 128;
+		// measures in px
+		static const int world_width = b_world_width * Winfo::block_size;
+		static const int world_height = b_world_height * Winfo::block_size;
+	};
+	/* ________________________________________________ */
 }
 
 

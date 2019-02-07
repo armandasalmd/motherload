@@ -1,67 +1,59 @@
 #include "Game.h"
 #include "TextureManager.h"
-#include "GameObject.h"
 #include "Map.h"
 #include "SDL_ttf.h"
 #include <iostream>
 #include "TextureObject.h"
 #include "Player.h"
+#include "Camera.h"
+
+
 
 Map *map;
-GameObject *background;
-
+TextureObject *background;
 Player *player;
+Camera *cam;
 
 SDL_Renderer *Game::renderer = nullptr;
 double gravity_speed = 0;
 
-Game::Game() {
-
-}
-
-Game::~Game() {
-
-}
+Game::Game() {}
+Game::~Game() {}
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen) {
+	// Preparing game objects
 	int flags = 0;
-
-	if (fullscreen) {
+	if (fullscreen)
 		flags = SDL_WINDOW_FULLSCREEN;
-	}
-
 	if (TTF_Init() == -1) {
 		std::cout << "TTF init failed!" << std::endl;
 		isRunning = false;
 	}
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) { // success
 		std::cout << "Subsystems Initialized" << std::endl;
-
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if (window) {
+		if (window)
 			std::cout << "Window created!" << std::endl;
-		}
-
-		renderer = SDL_CreateRenderer(window, 0, 0);
+		renderer = SDL_CreateRenderer(window, 0, 0); // Main renderer init
 		if (renderer) {
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
-
 		isRunning = true;
 	}
-	else {
+	else
 		isRunning = false;
-	}
-	background = new GameObject("assets/background.png", 0, 0);
-	background->SetDimentions(Winfo::width, Winfo::height);
-	background->Update();
-
+	// Initializing/loading textures of game objects
+	background = new TextureObject("assets/background.png");
 	player = new Player("assets/player.png", 0, 0, false);
-	player->Update();
+	cam = new Camera(this, map, player, background);
+	map = new Map();
 
-	map = new Map();	
+	background->SetDimentions(Winfo::width, Winfo::height);
+	background->DeltaOffset(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
+	player->SetCoords(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
+	player->Move(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
+	player->Update();
 }
 
 void Game::printText(std::string text, int text_size, int x, int y) {
@@ -78,24 +70,27 @@ void Game::printText(std::string text, int text_size, int x, int y) {
 	TTF_CloseFont(font);
 	font = nullptr;
 }
+
 void Game::printText(std::string text, int x, int y) {
 	printText(text, Winfo::text_size, x, y); // function overload
 }
 
 void Game::printToolbar() {
-	printText("Health: 100hp", 5, 0);
-	printText("Fuel: 6l/10l", 5, Winfo::text_size);
-	printText("Money: 55£", 5, Winfo::text_size * 2);
-	int *mCord = Map::GetGridCordinates(player->getX() + Winfo::block_size / 2, player->getY() + Winfo::block_size / 2);
+	//printText("Health: 100hp", 5, 0);
+	//printText("Fuel: 6l/10l", 5, Winfo::text_size);
+	//printText("Money: 55£", 5, Winfo::text_size * 2);
+	int *mCord = Map::GetGridCordinates(player->PosX() + Winfo::block_size / 2, player->PosY() + Winfo::block_size / 2);
 	std::string line3 = "x:" + std::to_string(mCord[0]) + " y:" + std::to_string(mCord[1]);
-	printText(line3, 15, 5, Winfo::text_size * 3 + 5);
+	printText(line3, 15, 5, 0);
+	std::string line4 = "X:" + std::to_string(player->PosX() + Winfo::block_size / 2) + " Y:" + std::to_string(player->PosY() + Winfo::block_size / 2);
+	printText(line4, 15, 5, Winfo::text_size);
 }
 
 void Game::update() {
+	// Make prayer movement here and etc...
 	gravity_speed += Gsettings::gravity * (1 + gravity_speed);
 	if (Gsettings::max_gravity_speed < gravity_speed)
 		gravity_speed = Gsettings::max_gravity_speed;
-
 
 	int move_x = 0;
 	int move_y = 0;
@@ -109,21 +104,20 @@ void Game::update() {
 			gravity_speed = 1;
 		else
 			gravity_speed /= 2;
-
-	player->Move(move_x, move_y + (int)gravity_speed);
-
-	player->Update();
+	
+	player->DeltaCoords(move_x, move_y + (int)gravity_speed); // related to this, camera renders stuff!
+	// Updating all view objects
+	cam->UpdateAll();
+	background->Update();
 }
 
 void Game::render() {
-	SDL_RenderClear(renderer);
-	
-	background->Render();
-	map->DrawMap();
-	player->Render();
+	SDL_RenderClear(Game::renderer);
+	// rendering all objects
+	cam->RenderAll();
 	printToolbar();
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(Game::renderer);
 }
 
 void Game::handleEvents() {
