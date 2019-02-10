@@ -1,0 +1,4 @@
+﻿  Map.cpp
+c:\dev\motherload\motherload\map.cpp(186): warning C4101: 'minY': unreferenced local variable
+c:\dev\motherload\motherload\map.cpp(185): warning C4101: 'minX': unreferenced local variable
+  Motherload.vcxproj -> C:\Dev\Motherload\x64\Debug\Motherload.exe

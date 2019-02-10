@@ -1,3 +1,4 @@
+#pragma once
 #include "Camera.h"
 #include <iostream>
 
@@ -28,10 +29,19 @@ void Camera::UpdateAll() {
 	background->Update();
 }
 
-void Camera::RenderAll() {
-	// this function renders all objects
-	// map->DrawMap();
+int Camera::getX()
+{
+	return (*this).camX;
+}
+int Camera::getY()
+{
+	return (*this).camY;
+}
+
+void Camera::RenderBg() {
 	background->Render();
+}
+void Camera::RenderPlayer() {
 	player->Render();
 }
 
@@ -53,6 +63,8 @@ int *Camera::calcCameraCoordinates() {
 	if (coords[1] > WorldInfo::world_height - Winfo::height)
 		coords[1] = WorldInfo::world_height - Winfo::height;
 	// End of function
+	(*this).camX = coords[0];
+	(*this).camY = coords[1];
 	cam.x = coords[0]; cam.y = coords[1];
 	return coords;
 }
