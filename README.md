@@ -12,3 +12,5 @@ SQLite3 installation:
 1. Open Visual Studio console
 2. [Follow tutorial](https://raginginverno.wordpress.com/2013/01/23/welcome/)
 3. Last command line: lib /def:sqlite3.def /out:sqlite3.lib /machine:X64
+
+https://cppcodetips.wordpress.com/tag/including-sqlite-with-visual-studio/
