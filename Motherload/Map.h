@@ -49,19 +49,6 @@ public:
 
 private:
 	SDL_Rect src, dest;
-
-	/*SDL_Texture *dirt;
-	SDL_Texture *grass;
-	SDL_Texture *water;
-	SDL_Texture *stone;
-	SDL_Texture *bronze;
-	SDL_Texture *silver;
-	SDL_Texture *iron;
-	SDL_Texture *gold;
-	SDL_Texture *ruby;
-	SDL_Texture *emerald;
-	SDL_Texture *diamond;
-*/
 	Player *player;
 
 	const char *paths_file = "assets/block_paths.txt";

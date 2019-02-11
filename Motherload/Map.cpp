@@ -115,7 +115,6 @@ void Map::LoadMap() { // generates new world
 	this->matrix = GenerateMap();
 	//PrintMap(map);
 }
-<<<<<<< HEAD
 
 /*void Map::SaveMap(char *path) {
 =======
@@ -264,37 +263,6 @@ void Map::Render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, 
 			if (selectedPath.name != "sky") {
 				TextureManager::Draw(selectedPath.tex, src, dest);
 			}
-
-			/*if (type == "grass") {
-
-			}
-			else if (type == "dirt") {
-				TextureManager::Draw(dirt, src, dest);
-			}
-			else if (type == "stone") {
-				TextureManager::Draw(stone, src, dest);
-			}
-			else if (type == "bronze") {
-				TextureManager::Draw(bronze, src, dest);
-			}
-			else if (type == "silver") {
-				TextureManager::Draw(silver, src, dest);
-			}
-			else if (type == "iron") {
-				TextureManager::Draw(iron, src, dest);
-			}
-			else if (type == "gold") {
-				TextureManager::Draw(gold, src, dest);
-			}
-			else if (type == "ruby") {
-				TextureManager::Draw(ruby, src, dest);
-			}
-			else if (type == "emerald") {
-				TextureManager::Draw(emerald, src, dest);
-			}
-			else if (type == "diamond") {
-				TextureManager::Draw(diamond, src, dest);
-			}*/
 		}
 	}
 }
@@ -307,25 +275,3 @@ int *Map::GetGridCordinates(int x, int y) { // Armandas function
 	}
 	return mArr;
 }
-
-void Map::render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, int yEdge)
-{
-	for (int y = camYCoords; y < yEdge; y++) {
-		for (int x = camXCoords; x < xEdge; x++) {
-			std::string type; // block id
-			type = matrix[y][x].getName();
-			dest.x = (x * Winfo::block_size) - camX;
-			dest.y = (y * Winfo::block_size) - camY;
-			TexturePath selectedPath;
-			for (TexturePath value : block_paths)
-				if (value.name == type) {
-					selectedPath = value;
-					break;
-				}
-			
-			if (selectedPath.name != "sky")
-				TextureManager::Draw(selectedPath.tex, src, dest);
-		}
-	}
-}
-

@@ -1,7 +1,6 @@
 #include "SDL.h"
 #include "Game.h"
 #include "StaticVars.h"
-#include "sqlite3.h"
 
 Game *game = nullptr;
 
