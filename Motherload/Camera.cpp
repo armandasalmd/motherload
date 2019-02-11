@@ -2,9 +2,8 @@
 #include "Camera.h"
 #include <iostream>
 
-Camera::Camera(Game *game, Map *map, Player *player, TextureObject *background) {
+Camera::Camera(Game *game,  Player *player, TextureObject *background) {
 	this->game = game;
-	this->map = map;
 	this->player = player;
 	this->background = background;
 }
@@ -18,8 +17,8 @@ void Camera::UpdateAll() {
 		new_player_x = player->PosX();
 	else if (cCoords[0] >= WorldInfo::world_width - Winfo::width)
 		new_player_x = Winfo::width + player->PosX() - WorldInfo::world_width;
-	if (cCoords[1] <= 0)
-		new_player_y = player->PosY() + Winfo::block_size;
+	if (cCoords[1] - 64 <= 0)
+		new_player_y = player->PosY();
 	else if (cCoords[1] >= WorldInfo::world_height - Winfo::height)
 		new_player_y = Winfo::height + player->PosY() - WorldInfo::world_height + Winfo::block_size;
 	// TODO: and need to add y axis bottom border!
@@ -27,15 +26,6 @@ void Camera::UpdateAll() {
 	player->Update();
 	background->SetOffset(cCoords[0], cCoords[1]);
 	background->Update();
-}
-
-int Camera::getX()
-{
-	return (*this).camX;
-}
-int Camera::getY()
-{
-	return (*this).camY;
 }
 
 void Camera::RenderBg() {
@@ -63,8 +53,6 @@ int *Camera::calcCameraCoordinates() {
 	if (coords[1] > WorldInfo::world_height - Winfo::height)
 		coords[1] = WorldInfo::world_height - Winfo::height;
 	// End of function
-	(*this).camX = coords[0];
-	(*this).camY = coords[1];
-	cam.x = coords[0]; cam.y = coords[1];
+	//cam.x = coords[0];\cam.y = coords[1];
 	return coords;
 }

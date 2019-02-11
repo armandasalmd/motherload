@@ -47,7 +47,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	// Initializing/loading textures of game objects
 	background = new TextureObject("assets/background.png");
 	player = new Player("assets/player.png", 0, 0, false);
-	cam = new Camera(this, map, player, background);
+	cam = new Camera(this, player, background);
 	map = new Map(player);
 
 	background->SetDimentions(Winfo::width, Winfo::height);
@@ -116,11 +116,10 @@ void Game::render() {
 	SDL_RenderClear(Game::renderer);
 	// rendering all objects
 	cam->RenderBg();
-	map->DrawMap(cam->getX(), cam->getY());
+	map->DrawMap(*cam);
 	cam->RenderPlayer();
 	printToolbar();
 	SDL_RenderPresent(Game::renderer);
-	
 }
 
 void Game::handleEvents() {
