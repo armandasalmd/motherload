@@ -16,8 +16,10 @@ int main(int argc, char *argv[]) {
 		frameStart = SDL_GetTicks();
 
 		game->handleEvents(); // handle any user input
-		game->update(); // update all objects eg. positions etc.
-		game->render(); // render changes to the display
+		if (game->getState() == Game::State::InGame) {
+			game->update(); // update all objects eg. positions etc.
+			game->render(); // render changes to the display
+		}
 
 		frameTime = SDL_GetTicks() - frameStart;
 

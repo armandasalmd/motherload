@@ -11,6 +11,12 @@ public:
 	Game();
 	~Game();
 
+	enum State { MainMenu, InGame, GasStation, Market, UpgradesShop };
+
+	void setState(State s) { gameState = s; }
+	State getState() { return gameState; }
+
+
 	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 	
 	void handleEvents();
@@ -27,6 +33,7 @@ public:
 
 private:
 	bool isRunning;
+	State gameState = InGame;
 	SDL_Window *window;
 
 	char x_key_pressed = '*'; // * - stand still, l - left, r - right

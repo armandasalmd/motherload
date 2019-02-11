@@ -1,11 +1,14 @@
+#pragma once
 #include "Map.h"
-#include "TextureManager.h"#include <fstream>
-#include <sstream>
+#include "Camera.h"
 
-Map::Map() {
+//#include <fstream>
+//#include <sstream>
+
+Map::Map(Player *player) {
 	// map initialization
 	LoadBlockPaths();
-	LoadMap("maps/map1.mp");
+	LoadMap();
 	//PrintMap(map);
 	// ___________
 
@@ -21,23 +24,34 @@ void Map::LoadBlockPaths() {
 	std::ifstream fd;
 	fd.open(paths_file);
 	std::string folder = "";
-	std::string extention = "";
+	std::string extension = "";
 	std::string temp;
+	TexturePath mineralPath;
 
 	if (fd.is_open()) {
 		fd >> folder >> folder;
-		fd >> extention >> extention;
+		fd >> extension >> extension;
+		int i = 0;
 		while (!fd.eof()) {
 			fd >> temp;
-			block_paths.push_back(folder + temp + extention);
+			mineralPath.blockId = (BlockList)i;
+			mineralPath.path = folder + temp + extension;
+			mineralPath.name = temp;
+			mineralPath.tex = TextureManager::LoadTexture(mineralPath.path);
+
+			block_paths.push_back(mineralPath);
+			mineralPath = TexturePath();
+			//std::cout << "blockID:" << mineralPath.blockId << " path:" << mineralPath.path << std::endl;
+			i++;
 		}
 	}
 	fd.close();
+
 	/*for (std::vector<std::string>::iterator it = begin(block_paths); it != end(block_paths); it = next(it))
 		std::cout << *it << std::endl;*/
 }
 
-void Map::LoadMap(char *path) {
+/*void Map::LoadMap(char *path) {
 	std::ifstream fd(path);
 	if (fd.is_open()) {
 		
@@ -65,14 +79,14 @@ void Map::LoadMap(char *path) {
 		// End reference;
 		fd.close();
 	}
-}
+}*/
 
 void Map::LoadMap() { // generates new world
-	map = GenerateMap();
+	this->matrix = GenerateMap();
 	//PrintMap(map);
 }
 
-void Map::SaveMap(char *path) {
+/*void Map::SaveMap(char *path) {
 	std::ofstream fr;
 	fr.open(path);
 	if (fr.is_open())
@@ -82,61 +96,174 @@ void Map::SaveMap(char *path) {
 			fr << '\n';
 		}
 	fr.close();
-}
+}*/
 
-void Map::DrawMap()
+void Map::DrawMap(Camera cam)
 {
-	int type = 0; // block id
-	for (int y = 0; y < Winfo::blocks_y; y++) // row
-		for (int x = 0; x < Winfo::blocks_x; x++) // column
-		{
-			type = map[y][x];
-			dest.x = x * Winfo::block_size;
-			dest.y = y * Winfo::block_size;
+	int *camCoords = cam.calcCameraCoordinates();
+	int camXCoords = camCoords[0] / 64;
+	int camYCoords = camCoords[1] / 64;
+	int xEdge;
+	int yEdge;
+	bool xLimit = WorldInfo::b_world_width - (camXCoords + Winfo::blocks_x + 1) >= 0;
+	bool yLimit = WorldInfo::b_world_height - (camYCoords + Winfo::blocks_y + 1) >= 0;
 
-			switch (type) {
-				case 1:
-					//TextureManager::Draw(water, src, dest);
-					break;
-				case 2:
-					//TextureManager::Draw(grass, src, dest);
-					break;
-				case 3:
-					//TextureManager::Draw(dirt, src, dest);
-					break;
-				default:
-					break;
-			}
-		}
+	if (xLimit && yLimit) {
+		yEdge = camYCoords + Winfo::blocks_y + 1;
+		xEdge = camXCoords + Winfo::blocks_x + 1;
+	}
+	else if (xLimit && !yLimit) {
+		yEdge = WorldInfo::b_world_height;
+		xEdge = camXCoords + Winfo::blocks_x + 1;
+	}
+	else if (!xLimit && yLimit) {
+		xEdge = WorldInfo::b_world_width;
+		yEdge = camYCoords + Winfo::blocks_y + 1;
+	}
+	else {
+		xEdge = WorldInfo::b_world_width;
+		yEdge = WorldInfo::b_world_height;
+	}
+	this->Render(camXCoords, camYCoords, camCoords[0], camCoords[1], xEdge, yEdge);
 }
 
-void Map::PrintMap(std::vector<std::vector<int>> m_map) {
-	for (const std::vector<int> &v : m_map)
+void Map::PrintMap(std::vector<std::vector<Mineral>> m_map) {
+	for (const std::vector<Mineral> &v : m_map)
 	{
-		for (int x : v)
-			std::cout << x << ' ';
+		for (Mineral x : v)
+			std::cout << x.getName() << ' ';
 		std::cout << std::endl;
 	}
 }
 
-std::vector<std::vector<int>> Map::GenerateMap() {
-	std::vector<std::vector<int>> new_map(Winfo::blocks_y, std::vector<int>(Winfo::blocks_x)); // [row][column]
-
-	for (int y = 0; y < 4; y++) // sky layer
-		for (int x = 0; x < Winfo::blocks_x; x++)
-			new_map[y][x] = 1; // [y-row][x-column]
-
-	for (int x = 0; x < Winfo::blocks_x; x++) // grass layer
-		new_map[4][x] = 2;
-
-	for (int y = 5; y < Winfo::blocks_y; y++) // dirt layer
-		for (int x = 0; x < Winfo::blocks_x; x++)
-			new_map[y][x] = 3;
-
-	return new_map;
+int Map::ReturnProbability(std::array<int, 9> probabilities, int randNum) {
+	return randNum <= 84 ? 0 :
+		randNum <= 86 ? 1 :
+		randNum <= 88 ? 2 :
+		randNum <= 90 ? 3 :
+		randNum <= 92 ? 4 :
+		randNum <= 94 ? 5 :
+		randNum <= 96 ? 6 :
+		randNum <= 98 ? 7 :
+		8;
 }
 
-int *Map::GetGridCordinates(int x, int y) {
+std::string Map::determineMineral(__int64 index) {
+	std::string getMinerals = "SELECT mineralName, mineralFrequency FROM minerals";
+	/*
+	while (sqlite3_column_text(getMinerals, 0))
+	{
+		for (int i = 0; i < 2; i++)
+			result[i].push_back(std::string((char *)sqlite3_column_text(getMinerals, i)));
+		sqlite3_step(getMinerals);
+	}
+	*/
+	std::array<std::string, 9> minerals = { "dirt", "stone","bronze","silver", "iron", "gold","ruby","emerald","diamond" };
+	std::array<int, 9> probabilities = { 84, 86, 88, 90, 92, 94, 96, 98, 100 };
+	//70, 75, 80, 85, 89, 93, 97, 99, 100
+	auto mineralsSize = minerals.size();
+	int randNum;
+	//Preset blocks
+	if (index < WorldInfo::b_sky_height) { return "sky"; }
+	else if (index == WorldInfo::b_sky_height) { return "grass"; }
+
+	//Randomly assign minerals
+	if (index > 0.9 * WorldInfo::b_world_height) {
+		randNum = rand() % probabilities[8] + 1;
+	}
+	else if (index > 0.6 * WorldInfo::b_world_height) {
+		randNum = rand() % probabilities[7] + 1;
+	}
+	else if (index > 0.3 * WorldInfo::b_world_height) {
+		randNum = rand() % probabilities[5] + 1;
+	}
+	else {
+		randNum = rand() % probabilities[2] + 1;
+	}
+	return minerals[ReturnProbability(probabilities, randNum)];
+}
+
+std::vector<std::vector<Mineral>> Map::GenerateMap() {
+	//Sets a random seed everytime solution is built
+	srand((unsigned int)time(NULL));
+
+	//Create a 2d Vector
+	std::vector<std::vector<Mineral>> matrix(WorldInfo::b_world_height, std::vector<Mineral>(WorldInfo::b_world_width));
+
+	//Declare iterators to go through 2d vector
+	std::vector<std::vector<Mineral>>::iterator row;
+	std::vector<Mineral>::iterator col;
+
+	//Traverse vector and set up initial values
+	for (int y = 0; y < WorldInfo::b_world_height; ++y) {
+		for (int x = 0; x < WorldInfo::b_world_width; ++x) {
+			//Create new material object from the randomly chosen
+			std::string mineral = determineMineral(y);
+			Mineral *newMin = new Mineral(mineral);
+			newMin->setX(x);
+			newMin->setY(y);
+			matrix[y][x] = *newMin;	//Add object to matrix
+		}
+	}
+	return matrix;
+}
+
+
+void Map::Render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, int yEdge)
+{
+	for (int y = camYCoords; y < yEdge; y++) {
+		for (int x = camXCoords; x < xEdge; x++) {
+			std::string type; // block id
+			type = matrix[y][x].getName();
+			dest.x = (x * Winfo::block_size) - camX;
+			dest.y = (y * Winfo::block_size) - camY;
+			TexturePath selectedPath;
+			for (TexturePath value : block_paths) {
+				if (value.name == type) {
+					selectedPath = value;
+					break;
+				}
+			}
+
+			if (selectedPath.name != "sky") {
+				TextureManager::Draw(selectedPath.tex, src, dest);
+			}
+
+			/*if (type == "grass") {
+
+			}
+			else if (type == "dirt") {
+				TextureManager::Draw(dirt, src, dest);
+			}
+			else if (type == "stone") {
+				TextureManager::Draw(stone, src, dest);
+			}
+			else if (type == "bronze") {
+				TextureManager::Draw(bronze, src, dest);
+			}
+			else if (type == "silver") {
+				TextureManager::Draw(silver, src, dest);
+			}
+			else if (type == "iron") {
+				TextureManager::Draw(iron, src, dest);
+			}
+			else if (type == "gold") {
+				TextureManager::Draw(gold, src, dest);
+			}
+			else if (type == "ruby") {
+				TextureManager::Draw(ruby, src, dest);
+			}
+			else if (type == "emerald") {
+				TextureManager::Draw(emerald, src, dest);
+			}
+			else if (type == "diamond") {
+				TextureManager::Draw(diamond, src, dest);
+			}*/
+		}
+	}
+}
+
+int *Map::GetGridCordinates(int x, int y) { // Armandas function
 	int *mArr = new int[2]{ -1, -1 };
 	if (Winfo::block_size != 0) {
 		mArr[0] = x / Winfo::block_size;
