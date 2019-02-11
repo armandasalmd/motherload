@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Map_h
 #define Map_h
 
@@ -30,6 +31,7 @@ public:
 		std::string path;
 		SDL_Texture* tex;
 	};
+
 	
 	Map(Player *player);
 	~Map();
@@ -48,8 +50,21 @@ public:
 private:
 	SDL_Rect src, dest;
 
+	/*SDL_Texture *dirt;
+	SDL_Texture *grass;
+	SDL_Texture *water;
+	SDL_Texture *stone;
+	SDL_Texture *bronze;
+	SDL_Texture *silver;
+	SDL_Texture *iron;
+	SDL_Texture *gold;
+	SDL_Texture *ruby;
+	SDL_Texture *emerald;
+	SDL_Texture *diamond;
+*/
+	Player *player;
+
 	const char *paths_file = "assets/block_paths.txt";
-	
 	std::vector<TexturePath> block_paths;
 	std::vector<std::vector<Mineral>> matrix; // [row][column]
 	std::vector<std::vector<Mineral>> GenerateMap(); // creates new map
@@ -58,4 +73,4 @@ private:
 	int ReturnProbability(std::array<int, 9> probabilities, int randNum);
 	std::string determineMineral(__int64 index);
 };
-#endif /* Game_hpp */
+#endif // Game_hpp 

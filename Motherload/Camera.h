@@ -17,7 +17,6 @@ public:
 	void RenderAll();
 	void RenderBg();
 	void RenderPlayer();
-
 	void UpdateAll();
 	int *calcCameraCoordinates();
 
@@ -26,5 +25,4 @@ private:
 	Player *player;
 	TextureObject *background;
 };
-
 #endif

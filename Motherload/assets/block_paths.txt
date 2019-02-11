@@ -1,13 +1,23 @@
+
 FOLDER: assets/
 EXTENSION: .png
+
 sky
 grass
+
 dirt
+
 stone
 iron
 bronze
+
 silver
+
 gold
+
 ruby
+
 emerald
+
+
 diamond

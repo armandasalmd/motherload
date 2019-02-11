@@ -1,7 +1,9 @@
+#pragma once
 #include "Camera.h"
 #include <iostream>
 
 Camera::Camera(Game *game, Player *player, TextureObject *background) {
+
 	this->game = game;
 	this->player = player;
 	this->background = background;

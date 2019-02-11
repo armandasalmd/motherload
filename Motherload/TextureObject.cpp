@@ -18,7 +18,6 @@ void TextureObject::Update() {
 	srcRect.w = width; // object width
 	destRect.h = height;
 	destRect.w = width;
-
 	if (animated)
 		srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / anim_speed) % anim_frames);
 	else

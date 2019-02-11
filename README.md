@@ -8,3 +8,6 @@ SQLite with c++ example:
 
 [Tutorials point](https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm)
 
+## Ibrahim please add here a link to pop up window :D
+
+## Brad please add tutorial for sqlite3

@@ -19,7 +19,6 @@ Map::Map(Player *player) {
 }
 
 Map::~Map() {}
-
 void Map::LoadBlockPaths() {
 	std::ifstream fd;
 	fd.open(paths_file);
@@ -50,6 +49,37 @@ void Map::LoadBlockPaths() {
 	/*for (std::vector<std::string>::iterator it = begin(block_paths); it != end(block_paths); it = next(it))
 		std::cout << *it << std::endl;*/
 }
+
+//
+//void Map::LoadMap(char *path) {
+//	std::ifstream fd(path);
+//	if (fd.is_open()) {
+//		
+//		std::string line = "";
+//		int block = 0;
+//		// Reference: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
+//		try {
+//			while (std::getline(fd, line)) {
+//				std::stringstream ss;
+//				ss << line;
+//				std::vector<int> row = {};
+//				for (int j = 0; j < WorldInfo::b_world_width; j++) {
+//					ss >> block;
+//					row.push_back(block);
+//				}
+//				map.push_back(row);
+//				ss.str(""); // creating string stream
+//			}
+//		}
+//		catch (const std::exception& e) {
+//			std::cout << e.what();
+//			std::cout << "\nMap must be: " << WorldInfo::b_world_width << "x" << WorldInfo::b_world_height << std::endl;
+//		}
+//		
+//		// End reference;
+//		fd.close();
+//	}
+//}
 
 /*void Map::LoadMap(char *path) {
 	std::ifstream fd(path);
@@ -85,8 +115,13 @@ void Map::LoadMap() { // generates new world
 	this->matrix = GenerateMap();
 	//PrintMap(map);
 }
+<<<<<<< HEAD
 
 /*void Map::SaveMap(char *path) {
+=======
+/*
+void Map::SaveMap(char *path) {
+>>>>>>> be7fb8b713a62cb127bd3e9741864045a9d4abc0
 	std::ofstream fr;
 	fr.open(path);
 	if (fr.is_open())
@@ -96,6 +131,7 @@ void Map::LoadMap() { // generates new world
 			fr << '\n';
 		}
 	fr.close();
+<<<<<<< HEAD
 }*/
 
 void Map::DrawMap(Camera cam)
@@ -269,6 +305,27 @@ int *Map::GetGridCordinates(int x, int y) { // Armandas function
 		mArr[0] = x / Winfo::block_size;
 		mArr[1] = y / Winfo::block_size;
 	}
-	// std::cout << mArr[0] << ", " << mArr[1] << std::endl;
 	return mArr;
 }
+
+void Map::render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, int yEdge)
+{
+	for (int y = camYCoords; y < yEdge; y++) {
+		for (int x = camXCoords; x < xEdge; x++) {
+			std::string type; // block id
+			type = matrix[y][x].getName();
+			dest.x = (x * Winfo::block_size) - camX;
+			dest.y = (y * Winfo::block_size) - camY;
+			TexturePath selectedPath;
+			for (TexturePath value : block_paths)
+				if (value.name == type) {
+					selectedPath = value;
+					break;
+				}
+			
+			if (selectedPath.name != "sky")
+				TextureManager::Draw(selectedPath.tex, src, dest);
+		}
+	}
+}
+
