@@ -10,6 +10,17 @@ void Player::Step(const int dx, const int dy) {
 
 void Player::SetCoords(int x, int y) {
 	// function do not let to pass the edge
-	if (x <= (WorldInfo::b_world_width - 1) * Winfo::block_size && x >= 0) positionX = x;
-	if (y <= (WorldInfo::b_world_height - 2) * Winfo::block_size && y >= 0) positionY = y;
+	if (x <= (WorldInfo::b_world_width - 1) * Winfo::block_size && x >= 0)
+		positionX = x;
+	else if (x < 0)
+		positionX = 0;
+	else if (x > (WorldInfo::b_world_width - 1) * Winfo::block_size)
+		positionX = (WorldInfo::b_world_width - 1) * Winfo::block_size;
+
+	if (y <= (WorldInfo::b_world_height - 2) * Winfo::block_size && y >= 0)
+		positionY = y;
+	else if (y < 0)
+		positionY = 0;
+	else if (y > (WorldInfo::b_world_height - 2) * Winfo::block_size)
+		positionY = (WorldInfo::b_world_height - 2) * Winfo::block_size;
 }

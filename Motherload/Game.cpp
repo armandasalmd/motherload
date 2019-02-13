@@ -16,7 +16,9 @@ Player *player;
 Camera *cam;
 
 SDL_Renderer *Game::renderer = nullptr;
-double gravity_speed = 0;
+
+double gravity_speed = 1;
+double acceleration = 0;
 
 Game::Game() {}
 Game::~Game() {}
@@ -89,24 +91,44 @@ void Game::printToolbar() {
 
 void Game::update() {
 	// Make prayer movement here and etc...
-	gravity_speed += Gsettings::gravity * (1 + gravity_speed);
-	if (Gsettings::max_gravity_speed < gravity_speed)
-		gravity_speed = Gsettings::max_gravity_speed;
+	int move_x = 0, 
+		move_y = 0;
 
-	int move_x = 0;
-	int move_y = 0;
-	
 	if (x_key_pressed != '*')
 		move_x = x_key_pressed == 'l' ? -Gsettings::step : Gsettings::step;
 	if (y_key_pressed != '*')
-		move_y = y_key_pressed == 'u' ? -Gsettings::step : Gsettings::step;
-	if (y_key_pressed == 'u')
+		move_y = y_key_pressed == 'u' ? -Gsettings::step * 2.2 : Gsettings::step;
+	
+	acceleration += -move_y - acceleration * 1/Gsettings::gravity - Gsettings::max_gravity_speed;
+
+	/*if (y_key_pressed != 'u') { // gravity speed increases
+		//gravity_speed += Gsettings::gravity * (1 + gravity_speed);
+		gravity_speed += Gsettings::gravity * (0.3 + gravity_speed); // increase
+		//move_y = -Gsettings::step * (1 + Gsettings::gravity);
+	}
+	else { // u - gravity speed decreases
+		if (gravity_speed <= 0.04)
+			gravity_speed = 0;
+		else
+			gravity_speed *= 0.9;
+	}
+	
+
+	if (Gsettings::max_gravity_speed < gravity_speed)
+		gravity_speed = Gsettings::max_gravity_speed;
+	else if (-Gsettings::max_gravity_speed > -gravity_speed)
+		gravity_speed = -Gsettings::max_gravity_speed;
+		
+	
+	
+	
+	/*if (y_key_pressed == 'u')
 		if (gravity_speed < Gsettings::gravity)
 			gravity_speed = 1;
 		else
-			gravity_speed /= 2;
+			gravity_speed /= 2;*/
 	
-	player->DeltaCoords(move_x, move_y + (int)gravity_speed); // related to this, camera renders stuff!
+	player->DeltaCoords(move_x, -acceleration); // related to this, camera renders stuff!
 	// Updating all view objects
 	cam->UpdateAll();
 	background->Update();
