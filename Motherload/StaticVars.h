@@ -6,7 +6,9 @@ namespace {
 		SKY = 0, GRASS, DIRT, STONE, BRONZE, SILVER, IRON, GOLD, RUBY, EMERALD, DIAMOND
 	};
 
-	
+	struct Coord {
+		int x = 0, y = 0;
+	};
 
 	/* ___________________ Winfo ______________________ */
 	struct Winfo {
