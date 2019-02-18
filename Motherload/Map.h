@@ -21,17 +21,14 @@
 
 class Map {
 public:
-	enum BlockList {
-		SKY = 0, GRASS, DIRT, STONE, BRONZE, SILVER, IRON, GOLD, RUBY, EMERALD, DIAMOND
-	}; //Maps each mineral (block) to a integer value.
-
+	//Maps each mineral (block) to a integer value.
+	
 	struct TexturePath {
 		BlockList blockId;
 		std::string name;
 		std::string path;
 		SDL_Texture* tex;
 	};
-
 	
 	Map(Player *player);
 	~Map();
@@ -39,13 +36,17 @@ public:
 	void LoadMap(); // loads map creating new one
 	void SaveMap(char *path); // saves map into given file
 	static int *GetGridCordinates(int x, int y); // Armandas function
+	TexturePath GetTexturePath(std::string blockName);
 
 	/* _____________________ Brad's functions _____________________ */
 	void Render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, int yEdge);
 	void PrintMap(std::vector<std::vector<Mineral>> m_map);
+	std::vector<std::vector<Mineral>> GetMap() { return matrix; }
 	void SetMap(std::vector<std::vector<Mineral>> newMap) { this->matrix = newMap; }
 	void DrawMap(Camera cam); // shows MAP on the screen
 	/* ____________________________________________________________ */
+
+	
 
 private:
 	SDL_Rect src, dest;

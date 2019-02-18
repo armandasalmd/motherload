@@ -1,14 +1,14 @@
 #pragma once
-#include "Game.h"
+
 #include "TextureManager.h"
 #include "SDL_ttf.h"
 #include <iostream>
 #include "TextureObject.h"
 #include "Player.h"
+#include "Collision.h"
 #include "Map.h"
 #include "Camera.h"
-
-
+#include "Game.h"
 
 Map *map;
 TextureObject *background;
@@ -97,38 +97,13 @@ void Game::update() {
 	if (x_key_pressed != '*')
 		move_x = x_key_pressed == 'l' ? -Gsettings::step : Gsettings::step;
 	if (y_key_pressed != '*')
-		move_y = y_key_pressed == 'u' ? -Gsettings::step * 2.2 : Gsettings::step;
+		move_y = y_key_pressed == 'u' ? (int)((double)-Gsettings::step * 2.2) : Gsettings::step;
 	
 	acceleration += -move_y - acceleration * 1/Gsettings::gravity - Gsettings::max_gravity_speed;
 
-	/*if (y_key_pressed != 'u') { // gravity speed increases
-		//gravity_speed += Gsettings::gravity * (1 + gravity_speed);
-		gravity_speed += Gsettings::gravity * (0.3 + gravity_speed); // increase
-		//move_y = -Gsettings::step * (1 + Gsettings::gravity);
-	}
-	else { // u - gravity speed decreases
-		if (gravity_speed <= 0.04)
-			gravity_speed = 0;
-		else
-			gravity_speed *= 0.9;
-	}
-	
+	Collision::MovePlayer(map, player, move_x, (int)-acceleration); // it does the movement, as well as adjustify movement coordinates!
+	//player->DeltaCoords(move_x, (int)-acceleration);
 
-	if (Gsettings::max_gravity_speed < gravity_speed)
-		gravity_speed = Gsettings::max_gravity_speed;
-	else if (-Gsettings::max_gravity_speed > -gravity_speed)
-		gravity_speed = -Gsettings::max_gravity_speed;
-		
-	
-	
-	
-	/*if (y_key_pressed == 'u')
-		if (gravity_speed < Gsettings::gravity)
-			gravity_speed = 1;
-		else
-			gravity_speed /= 2;*/
-	
-	player->DeltaCoords(move_x, -acceleration); // related to this, camera renders stuff!
 	// Updating all view objects
 	cam->UpdateAll();
 	background->Update();

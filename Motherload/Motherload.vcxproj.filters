@@ -39,6 +39,9 @@
     <ClCompile Include="Mineral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -65,6 +68,9 @@
     <ClInclude Include="Mineral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\dirt.png">
@@ -77,27 +83,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\water.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\bronzium.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\diamond.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\emerald.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\goldium.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ironium.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ruby.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\silverium.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

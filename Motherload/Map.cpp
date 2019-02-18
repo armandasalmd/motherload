@@ -113,7 +113,7 @@ void Map::LoadBlockPaths() {
 
 void Map::LoadMap() { // generates new world
 	this->matrix = GenerateMap();
-	//PrintMap(map);
+	//PrintMap(matrix);
 }
 
 /*void Map::SaveMap(char *path) {
@@ -240,6 +240,9 @@ std::vector<std::vector<Mineral>> Map::GenerateMap() {
 			matrix[y][x] = *newMin;	//Add object to matrix
 		}
 	}
+
+	Mineral *newMin = new Mineral("sky");
+	matrix[5][5] = *newMin;
 	return matrix;
 }
 
@@ -274,4 +277,12 @@ int *Map::GetGridCordinates(int x, int y) { // Armandas function
 		mArr[1] = y / Winfo::block_size;
 	}
 	return mArr;
+}
+
+// Armandas function
+Map::TexturePath Map::GetTexturePath(std::string blockName) {
+	for (TexturePath t: block_paths)
+		if (t.name == blockName)
+			return t;
+	return Map::TexturePath();
 }
