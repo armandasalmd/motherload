@@ -242,7 +242,13 @@ std::vector<std::vector<Mineral>> Map::GenerateMap() {
 	}
 
 	Mineral *newMin = new Mineral("sky");
+	
+	// temp map manipulator
 	matrix[5][5] = *newMin;
+	matrix[6][5] = *newMin;
+	matrix[6][6] = *newMin;
+	// end
+
 	return matrix;
 }
 
