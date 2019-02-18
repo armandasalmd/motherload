@@ -17,5 +17,9 @@ There is another way of doing this , but we gonna have to used OpenGL ( can work
 Menu GUI interface (SDL based/ 32bit):
 [Link to git](https://github.com/killerrin/SDL-GUI-API)
 
+SQLite3 installation:
+1. Open Visual Studio console
+2. [Follow tutorial](https://raginginverno.wordpress.com/2013/01/23/welcome/)
+3. Last command line: lib /def:sqlite3.def /out:sqlite3.lib /machine:X64
 
-## Brad please add tutorial for sqlite3
+https://cppcodetips.wordpress.com/tag/including-sqlite-with-visual-studio/
