@@ -14,6 +14,7 @@ namespace {
 	struct Winfo {
 		// window info, window settings(static)
 		static const std::string title;
+		static const std::string db_name;
 
 		static const int FPS = 30;
 		static const int frameDelay = 1000 / FPS;
@@ -34,6 +35,7 @@ namespace {
 	};
 
 	const std::string Winfo::title = "Motherload";
+	const std::string Winfo::db_name = "game.sqlite";
 	/* ________________________________________________ */
 
 	/* ___________________ Gsettings __________________ */

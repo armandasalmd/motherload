@@ -3,6 +3,7 @@
 #define Game_h
 #include "SDL.h"
 #include "SDL_image.h"
+#include "Models.h"
 
 #include <iostream>
 

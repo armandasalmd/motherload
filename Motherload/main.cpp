@@ -2,17 +2,10 @@
 #include "Game.h"
 #include "StaticVars.h"
 #include "sqlite3.h"
+#include "Models.h"
 
 Game *game = nullptr;
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
-	int i;
-	for (i = 0; i < argc; i++) {
-		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-	}
-	printf("\n");
-	return 0;
-}
 
 int main(int argc, char *argv[]) {	
 	Uint32 frameStart;
@@ -23,6 +16,10 @@ int main(int argc, char *argv[]) {
 		std::cout << "Step size cannot be bigger than block size!" << std::endl;
 		return 1;
 	}
+	
+	//Models *m = Models::getInstance();
+	//Models::getInstance()->queryString("SELECT * FROM Persons;"); // initializing Models
+	Models::getInstance();
 
 	game = new Game();
 	game->init(Winfo::title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
@@ -51,6 +48,7 @@ int main(int argc, char *argv[]) {
 		// else: computer is slow and it is lagging - do not delay
 	}
 	game->clean(); // destroy the Game
+	delete Models::getInstance();
 
 	return 0;
 }
