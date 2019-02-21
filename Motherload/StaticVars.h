@@ -42,12 +42,12 @@ namespace {
 		static const int spawn_x = 7;
 		static const int spawn_y = 3;
 
-		static const int step = 8; // step size in px
+		static const int step = 4; // step size in px
 		static const double gravity;
 		static const double max_gravity_speed;
 	};
 
-	const double Gsettings::gravity = 0.7;
+	const double Gsettings::gravity = 0.8;
 	const double Gsettings::max_gravity_speed = 8.0;
 	/* ________________________________________________ */
 

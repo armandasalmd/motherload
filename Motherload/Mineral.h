@@ -44,8 +44,6 @@ public:
 		this->health += newHealth;
 	}
 
-	~Mineral() {
-
-	}
+	~Mineral() { }
 };
 #endif

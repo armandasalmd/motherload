@@ -78,15 +78,17 @@ void Game::printText(std::string text, int x, int y) {
 	printText(text, Winfo::text_size, x, y); // function overload
 }
 
-void Game::printToolbar() {
+void Game::printToolbar(int fps) {
 	//printText("Health: 100hp", 5, 0);
 	//printText("Fuel: 6l/10l", 5, Winfo::text_size);
 	//printText("Money: 55£", 5, Winfo::text_size * 2);
 	int *mCord = Map::GetGridCordinates(player->PosX() + Winfo::block_size / 2, player->PosY() + Winfo::block_size / 2);
 	std::string line3 = "x:" + std::to_string(mCord[0]) + " y:" + std::to_string(mCord[1]);
 	printText(line3, 15, 5, 0);
-	std::string line4 = "X:" + std::to_string(player->PosX() + Winfo::block_size / 2) + " Y:" + std::to_string(player->PosY() + Winfo::block_size / 2);
+	std::string line4 = "X:" + std::to_string(player->PosX()/* + Winfo::block_size / 2*/) + " Y:" + std::to_string(player->PosY()/* + Winfo::block_size / 2*/);
 	printText(line4, 15, 5, Winfo::text_size);
+	std::string line5 = "FPS:" + std::to_string(fps);
+	printText(line5, 15, 5, Winfo::text_size * 2);
 }
 
 void Game::update() {
@@ -97,25 +99,23 @@ void Game::update() {
 	if (x_key_pressed != '*')
 		move_x = x_key_pressed == 'l' ? -Gsettings::step : Gsettings::step;
 	if (y_key_pressed != '*')
-		move_y = y_key_pressed == 'u' ? (int)((double)-Gsettings::step * 2.2) : Gsettings::step;
+		move_y = y_key_pressed == 'u' ? -Gsettings::step : Gsettings::step;
+	move_y = y_key_pressed == 'u' ? -Gsettings::step : (int)((double)Gsettings::step * Gsettings::gravity);
 	
-	acceleration += -move_y - acceleration * 1/Gsettings::gravity - Gsettings::max_gravity_speed;
-
-	Collision::MovePlayer(map, player, move_x, (int)-acceleration); // it does the movement, as well as adjustify movement coordinates!
-	//player->DeltaCoords(move_x, (int)-acceleration);
+	Collision::MovePlayer(map, player, move_x, move_y); // it does the movement, as well as adjustify movement coordinates!
 
 	// Updating all view objects
 	cam->UpdateAll();
 	background->Update();
 }
 
-void Game::render() {
+void Game::render(int fps) {
 	SDL_RenderClear(Game::renderer);
 	// rendering all objects
 	cam->RenderBg();
 	map->DrawMap(*cam);
 	cam->RenderPlayer();
-	printToolbar();
+	printToolbar(fps);
 	SDL_RenderPresent(Game::renderer);
 }
 

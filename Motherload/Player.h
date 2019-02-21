@@ -16,6 +16,8 @@ public:
 	
 	// player map coordinates function
 	void SetCoords(int x, int y);
+	void SetX(int x) { positionX = x; };
+	void SetY(int y) { positionY = y; };
 	
 	// player map coordinates function
 	void DeltaCoords(int dx, int dy) { SetCoords(positionX + dx, positionY + dy); }

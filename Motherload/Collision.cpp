@@ -18,49 +18,169 @@ void Collision::MovePlayer(Map *m, Player *p, int dx, int dy) {
 	else p->DeltaX(dx);
 }
 
-void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) {
-	int pretendedX = p->PosX() + cDelta.x + Winfo::block_size / 2,
-		pretendedY = p->PosY() + cDelta.y + Winfo::block_size;
+void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) { // controls up/down
+	// Stepped player boundaries
+	if (cDelta.y == 0)
+		return;
+	int x1 = p->PosX() + 12 , // xLeft
+		x2 = p->PosX() + 52 - 1 ; // xRight
+	int y1 = p->PosY() + 16 + cDelta.y, // yTop
+		y2 = p->PosY() + 64 + cDelta.y; // yBottom
 
-	int *pretGridCoords = m->GetGridCordinates(pretendedX, pretendedY);
+	int* points[4];
+	points[0] = Map::GetGridCordinates(x1, y1);
+	points[1] = Map::GetGridCordinates(x2, y1);
+	points[2] = Map::GetGridCordinates(x2, y2);
+	points[3] = Map::GetGridCordinates(x1, y2);
 
-	Mineral pretendedMineral = m->GetMap()[pretGridCoords[1]][pretGridCoords[0]];
-	Map::TexturePath pretendedPath = m->GetTexturePath(pretendedMineral.getName());
-	if (BlockList::SKY == pretendedPath.blockId)
-		p->DeltaCoords(cDelta.x, cDelta.y);
-	else {
+	//int block_pos = (p->PosY() + Gsettings::step + 32) % 64 - 24; // values: [-32; 32], 0 is middle
+	int block_pos = (y1 + y2) / 2 % 64 - 32;
+	Mineral m1, m2;
+	bool sameBlock = false;
 
-		//std::cout << pretendedMineral.getY() << std::endl;
-		if (p->PosY() % Winfo::block_size != 0) {
-			p->SetCoords(p->PosX(), (pretendedMineral.getY() - 1) * Winfo::block_size);
+	if (block_pos < -8) { // player touch top wall
+		m1 = m->GetMap()[points[0][1]][points[0][0]];
+		if (!(points[0][0] == points[1][0] && points[0][1] == points[1][1])) //touches two blocks
+			m2 = m->GetMap()[points[1][1]][points[1][0]];
+		else //touches one block
+			sameBlock = true;
+		// if ((sameBlock && m1.getName() == "sky") || (m1.getName() == "sky" && m2.getName() == "sky"))
+		if (m1.getName() == "sky" && (sameBlock || m2.getName() == "sky"))
+			p->DeltaY(cDelta.y);
+		else 
+			p->SetY((points[0][1] + 1) * 64 - 16);
+	}
+	else if (block_pos > 8) { // player touch bottom wall
+		m1 = m->GetMap()[points[2][1]][points[2][0]];
+		if (!(points[2][0] == points[3][0] && points[2][1] == points[3][1])) //touches two blocks
+			m2 = m->GetMap()[points[3][1]][points[3][0]];
+		else //touches one block
+			sameBlock = true;
+		// if ((sameBlock && m1.getName() == "sky") || (m1.getName() == "sky" && m2.getName() == "sky"))
+		if (m1.getName() == "sky" && (sameBlock || m2.getName() == "sky"))
+			p->DeltaY(cDelta.y);
+		else
+			p->SetY((points[2][1] - 1) * 64);
+	}
+	else // if no collision found, move like default 
+		p->DeltaY(cDelta.y);
+}
+
+void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) { // controls left/right
+	// Stepped player boundaries
+	if (cDelta.x == 0)
+		return;
+	int x1 = p->PosX() + 12 + cDelta.x, // xLeft
+		x2 = p->PosX() + 52 - 1 + cDelta.x; // xRight
+	int y1 = p->PosY() + 16, // yTop
+		y2 = p->PosY() + 64 - 1; // yBottom
+
+	int* points[4];
+	points[0] = Map::GetGridCordinates(x1, y1);
+	points[1] = Map::GetGridCordinates(x2, y1);
+	points[2] = Map::GetGridCordinates(x2, y2);
+	points[3] = Map::GetGridCordinates(x1, y2);
+
+	//int block_pos = (p->PosX() + 32) % 64 - 32; // values: [-32; 32], 0 is middle
+	int block_pos = (x1 + x2) / 2 % 64 - 32 + 1;
+
+	Mineral m1, m2;
+	bool sameBlock = false;
+
+	if (block_pos > 12) { // player touch right wall
+		m1 = m->GetMap()[points[1][1]][points[1][0]];
+		if (!(points[1][0] == points[2][0] && points[1][1] == points[2][1])) // two blocks touched right
+			m2 = m->GetMap()[points[2][1]][points[2][0]];
+		else
+			sameBlock = true;
+		if (m1.getName() == "sky" && (sameBlock || m2.getName() == "sky"))
+			p->DeltaX(cDelta.x);
+		else {
+			//int xBlockCoord = points[1][0] * Winfo::block_size;
+			//p->SetX(xBlockCoord - 53);
+			p->SetX(points[0][0] * 64 + 12);
 		}
-		p->DeltaCoords(cDelta.x, 0);
-		//std::cout << (p->PosX() + 32) % 64 << std::endl;
 	}
-}
-
-void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) {
-	Coord cStepped;
-	cStepped.x = p->PosX() + cDelta.x + Winfo::block_size / 2;
-	cStepped.y = p->PosY() + cDelta.y + Winfo::block_size;
-	int player_x_pos_on_block = (p->PosX() + Winfo::block_size / 2) % Winfo::block_size - Winfo::block_size / 2; // values: [-32; 32], 0 is middle
-
-	if (player_x_pos_on_block > 20) { // you hit right wall
-		std::cout << "I hit right wall" << player_x_pos_on_block << std::endl;
+	else if (block_pos < -12) { // player touch left wall
+		m1 = m->GetMap()[points[0][1]][points[0][0]];
+		if (!(points[0][0] == points[3][0] && points[0][1] == points[3][1])) // two blocks touched left
+			m2 = m->GetMap()[points[3][1]][points[3][0]];
+		else
+			sameBlock = true;
+		if (m1.getName() == "sky" && (sameBlock || m2.getName() == "sky"))
+			p->DeltaX(cDelta.x);
+		else {
+			/*int xBlockCoord = points[0][0] * Winfo::block_size;
+			p->SetX(xBlockCoord + Winfo::block_size - 11);*/
+			p->SetX((points[0][0] + 1) * 64 - 12);
+		}
 	}
-	else if (player_x_pos_on_block < -20) { // you hit left wall
-		std::cout << "I hit left wall" << player_x_pos_on_block << std::endl;
-	}
-	else { // all fine, you hit air
+	else // if no collision found, move like default 
 		p->DeltaX(cDelta.x);
-	}
-	
-
-	//if ()
-	
-
-
-
 }
 
 
+//void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) {
+//	Coord cStepped; // player middle point coords
+//	cStepped.x = p->PosX() + cDelta.x + Winfo::block_size / 2;
+//	cStepped.y = p->PosY() + 16 ; // we do not manipulate y collition here, leave the same
+//	int player_x_pos_on_block = (p->PosX() + Winfo::block_size / 2) % Winfo::block_size - Winfo::block_size / 2; // values: [-32; 32], 0 is middle
+//	int *spriteEdgeGridCoord;
+//	Mineral touchedBlock;
+//	//Map::TexturePath touchedPath;
+//
+//	if (player_x_pos_on_block + Gsettings::step >= 20) { // player touch right wall
+//		// if it happens, we need to check if that wall is air or block
+//		// if air then move player, else move player as close as possible
+//		spriteEdgeGridCoord = Map::GetGridCordinates(cStepped.x + 20 /* sprite right edge */, cStepped.y);
+//		touchedBlock = m->GetMap()[spriteEdgeGridCoord[1]][spriteEdgeGridCoord[0]];
+//		//touchedPath = m->GetTexturePath(touchedBlock.getName());
+//		if (touchedBlock.getName() != "sky") { // then you have collition with a block
+//			p->SetX(touchedBlock.getX() * Winfo::block_size - 52);
+//			return;
+//		}
+//		//
+//	}
+//	else if (player_x_pos_on_block - Gsettings::step <= -20) { // player touch left wall
+//		spriteEdgeGridCoord = Map::GetGridCordinates(cStepped.x - 20 /* sprite left edge */, cStepped.y);
+//		touchedBlock = m->GetMap()[spriteEdgeGridCoord[1]][spriteEdgeGridCoord[0]];
+//		//touchedPath = m->GetTexturePath(touchedBlock.getName());
+//		if (touchedBlock.getName() != "sky") { // then you have collition with a block
+//			p->SetX((touchedBlock.getX() + 1) * Winfo::block_size - 12);
+//			return;
+//		}
+//	}
+//	p->DeltaX(cDelta.x); // if no collision found, move like default 
+//}
+
+
+//void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) {
+//	int pretendedX = p->PosX() + cDelta.x + Winfo::block_size / 2,
+//		pretendedY = p->PosY() + cDelta.y + Winfo::block_size;
+//
+//	int *pretGridCoords = m->GetGridCordinates(pretendedX, pretendedY);
+//
+//	Mineral pretendedMineral = m->GetMap()[pretGridCoords[1]][pretGridCoords[0]];
+//	Map::TexturePath pretendedPath = m->GetTexturePath(pretendedMineral.getName());
+//	if (BlockList::SKY == pretendedPath.blockId)
+//		p->DeltaY(cDelta.y);
+//	else {
+//		if (p->PosY() % Winfo::block_size != 0) {
+//			p->SetCoords(p->PosX(), (pretendedMineral.getY() - 1) * Winfo::block_size);
+//		}
+//		//p->DeltaCoords(cDelta.x, 0);
+//		//std::cout << (p->PosX() + 32) % 64 << std::endl;
+//	}
+//}
+
+/*
+	Horizontal movement collision:
+	+ determine if player is more left/right
+	+ if right calculate right sprite points, if left calculate left sprite points (40x48)
+	+ convert it to grid coordinates
+	+ if points are the same coordinate, then check one of them
+	+ else point 1 has to pass the test and point 2 has to pass it to move that direction
+	+ if the test is passed (blocks are air), then default move
+	- else (if failed the test) take that grid coordinate wall and pull player to its left/right x coord as close as possib.
+	== new player coord = wall left or right coord px on map ------ player x(+40 if right wall) coord
+*/

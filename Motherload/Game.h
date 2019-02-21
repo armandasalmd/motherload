@@ -22,11 +22,11 @@ public:
 	
 	void handleEvents();
 	void update();
-	void render();
+	void render(int fps);
 	void clean();
 	void printText(std::string text, int x, int y); // prints given text
 	void printText(std::string text, int font_size, int x, int y); // prints given text
-	void printToolbar();
+	void printToolbar(int fps);
 
 	bool running() { return isRunning; };
 

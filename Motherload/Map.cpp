@@ -50,37 +50,6 @@ void Map::LoadBlockPaths() {
 		std::cout << *it << std::endl;*/
 }
 
-//
-//void Map::LoadMap(char *path) {
-//	std::ifstream fd(path);
-//	if (fd.is_open()) {
-//		
-//		std::string line = "";
-//		int block = 0;
-//		// Reference: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
-//		try {
-//			while (std::getline(fd, line)) {
-//				std::stringstream ss;
-//				ss << line;
-//				std::vector<int> row = {};
-//				for (int j = 0; j < WorldInfo::b_world_width; j++) {
-//					ss >> block;
-//					row.push_back(block);
-//				}
-//				map.push_back(row);
-//				ss.str(""); // creating string stream
-//			}
-//		}
-//		catch (const std::exception& e) {
-//			std::cout << e.what();
-//			std::cout << "\nMap must be: " << WorldInfo::b_world_width << "x" << WorldInfo::b_world_height << std::endl;
-//		}
-//		
-//		// End reference;
-//		fd.close();
-//	}
-//}
-
 /*void Map::LoadMap(char *path) {
 	std::ifstream fd(path);
 	if (fd.is_open()) {
@@ -117,10 +86,6 @@ void Map::LoadMap() { // generates new world
 }
 
 /*void Map::SaveMap(char *path) {
-=======
-/*
-void Map::SaveMap(char *path) {
->>>>>>> be7fb8b713a62cb127bd3e9741864045a9d4abc0
 	std::ofstream fr;
 	fr.open(path);
 	if (fr.is_open())
@@ -130,7 +95,6 @@ void Map::SaveMap(char *path) {
 			fr << '\n';
 		}
 	fr.close();
-<<<<<<< HEAD
 }*/
 
 void Map::DrawMap(Camera cam)
@@ -247,6 +211,8 @@ std::vector<std::vector<Mineral>> Map::GenerateMap() {
 	matrix[5][5] = *newMin;
 	matrix[6][5] = *newMin;
 	matrix[6][6] = *newMin;
+	matrix[7][5] = *newMin;
+	matrix[7][4] = *newMin;
 	// end
 
 	return matrix;
