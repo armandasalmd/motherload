@@ -17,6 +17,9 @@ public:
 	template <typename T> // Model class
 	bool insert(std::string table_name, T model);
 
+	// template <typename T> // Model class
+	// T insert(std::string table_name, int id);
+
 private:
 	Models();
 	static Models* instance;
