@@ -1,7 +1,7 @@
 CREATE TABLE Player(
 	playerID			varchar	PRIMARY KEY,
-	drillLevel			varchar,
-	backpackLevel		varchar,
+	drillLevel			varchar	DEFAULT 1,
+	backpackLevel		varchar	DEFAULT 1,
 	FOREIGN KEY(drillLevel)		REFERENCES Drill(drillLevel),
 	FOREIGN KEY(backpackLevel)	REFERENCES Backpack(backpackLevel)
 );
@@ -54,9 +54,14 @@ VALUES
 
 INSERT INTO Minerals
 VALUES
-	(0,		"Grass",	0.25,	1,	3,	0,	6,	"assets/grass.png"),
-	(1,		"Dirt",		0.25,	1,	3,	3,	6,	"assets/dirt.png"),
-	(2,		"Stone",	2,		2,	5,	15,	15,	"assets/stone.png"),
-	(3,		"Bronze",	5,		3,	8,	10,	20,	"assets/bronze.png"),
-	(4,		"Silver",	20,		5,	10,	10,	25,	"assets/silver.png"),
-	(5,		"Iron",		50,		10,	12,	10,	30,	"assets/iron.png");
+	(0,		"Grass",	0.25,	1,		3,	0,	6,		"assets/grass.png"),
+	(1,		"Dirt",		0.25,	1,		3,	3,	6,		"assets/dirt.png"),
+	(2,		"Stone",	2,		2,		5,	15,	15,		"assets/stone.png"),
+	(3,		"Bronze",	5,		3,		8,	10,	20,		"assets/bronze.png"),
+	(4,		"Silver",	20,		5,		10,	10,	25,		"assets/silver.png"),
+	(5,		"Iron",		50,		10,		12,	10,	30,		"assets/iron.png"),
+	(6,		"Gold",		200,	20,		15,	10,	50,		"assets/gold.png"),
+	(7,		"Ruby",		500,	50,		18,	5,	70,		"assets/ruby.png"),
+	(8,		"Emerald",	1500,	100,	20,	5,	90,		"assets/emerald.png"),
+	(9,		"Diamond",	5000,	250,	25,	5,	120,	"assets/diamond.png"),
+	(10,	"Water",	0,		0,		0,	0,	0,		"assets/water.png");
