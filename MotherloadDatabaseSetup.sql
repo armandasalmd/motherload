@@ -52,7 +52,7 @@ VALUES
 	(4, 20),
 	(5, 25);
 
-INSERT INTO Minerals
+INSERT INTO Mineral
 VALUES
 	(0,		"Grass",	0.25,	1,		3,	0,	6,		"assets/grass.png"),
 	(1,		"Dirt",		0.25,	1,		3,	3,	6,		"assets/dirt.png"),
