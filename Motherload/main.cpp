@@ -6,7 +6,6 @@
 
 Game *game = nullptr;
 
-
 int main(int argc, char *argv[]) {	
 	Uint32 frameStart;
 	int frameTime;
