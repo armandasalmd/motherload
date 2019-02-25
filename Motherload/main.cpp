@@ -3,7 +3,6 @@
 #include "StaticVars.h"
 #include "sqlite3.h"
 #include "Models.h"
-#include "libsqlite.hpp"
 
 Game *game = nullptr;
 

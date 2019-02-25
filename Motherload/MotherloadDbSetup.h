@@ -1,10 +1,9 @@
 #pragma once
 #include <iostream>
-#include "libsqlite.hpp"
 
 int main()
 {
-	sqlite::sqlite db(MotherloadDB.sqlite);			//database not yet created, uncertain on where to store it
+	sqlite::sqlite db(MotherloadDB.sqlite);			
 	auto cur = db.get_statement();
 
 }
@@ -25,7 +24,7 @@ int insertBackpackData()
 	cur->bind(4, 24);
 	cur->bind(5, 30);
 	
-	cur->step();		//Run Query
+	cur->step();		
 }
 
 int insertDrillData()
@@ -57,9 +56,9 @@ int insertMineralData()
 
 	cur->prepare();
 
-	cur->bind(0,	"Grass",	0.25,	1,		3,	0,	6,		"assets/grass.png");	//Uncertain on this error, tried looking into it,
-	cur->bind(1,	"Dirt",		0.25,	1,		3,	3,	6,		"assets/dirt.png");		//However cannot figure out.
-	cur->bind(2,	"Stone",	2,		2,		5,	15,	15,		"assets/stone.png");	//Could be the how many are being passed or i may be using wrong command
+	cur->bind(0,	"Grass",	0.25,	1,		3,	0,	6,		"assets/grass.png");	
+	cur->bind(1,	"Dirt",		0.25,	1,		3,	3,	6,		"assets/dirt.png");		
+	cur->bind(2,	"Stone",	2,		2,		5,	15,	15,		"assets/stone.png");	
 	cur->bind(3,	"Bronze",	5,		3,		8,	10,	20,		"assets/bronze.png");
 	cur->bind(4,	"Silver",	20,		5,		10,	10,	25,		"assets/silver.png");
 	cur->bind(5,	"Iron",		50,		10,		12,	10,	30,		"assets/iron.png");
