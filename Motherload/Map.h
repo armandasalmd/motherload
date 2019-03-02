@@ -41,7 +41,7 @@ public:
 	/* _____________________ Brad's functions _____________________ */
 	void Render(int camXCoords, int camYCoords, int camX, int camY, int xEdge, int yEdge);
 	void PrintMap(std::vector<std::vector<Mineral>> m_map);
-	std::vector<std::vector<Mineral>> &GetMap() { return matrix; }
+	std::vector<std::vector<Mineral>> GetMap() { return matrix; }
 	void SetMap(std::vector<std::vector<Mineral>> newMap) { this->matrix = newMap; }
 	void DrawMap(Camera cam); // shows MAP on the screen
 	/* ____________________________________________________________ */
