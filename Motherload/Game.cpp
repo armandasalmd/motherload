@@ -71,7 +71,6 @@ void Game::printText(std::string text, int text_size, int x, int y) {
 	SDL_RenderCopy(renderer, textt, NULL, &renderQuad);
 	SDL_DestroyTexture(textt);
 	TTF_CloseFont(font);
-	font = nullptr;
 }
 
 void Game::printText(std::string text, int x, int y) {
@@ -89,6 +88,7 @@ void Game::printToolbar(int fps) {
 	printText(line4, 15, 5, Winfo::text_size);
 	std::string line5 = "FPS:" + std::to_string(fps);
 	printText(line5, 15, 5, Winfo::text_size * 2);
+	// delete mCord;
 }
 
 void Game::update() {

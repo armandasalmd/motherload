@@ -47,7 +47,9 @@ int main(int argc, char *argv[]) {
 		// else: computer is slow and it is lagging - do not delay
 	}
 	game->clean(); // destroy the Game
+	
 	delete Models::getInstance();
+	//delete game;
 
 	return 0;
 }
