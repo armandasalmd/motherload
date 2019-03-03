@@ -92,7 +92,7 @@ void Game::printToolbar(int fps) {
 }
 
 void Game::update() {
-	// Make prayer movement here and etc...
+	// Make player movement here and etc...
 	int move_x = 0, 
 		move_y = 0;
 
