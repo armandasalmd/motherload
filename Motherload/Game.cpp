@@ -9,11 +9,13 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Game.h"
+#include "BuildingManager.h"
 
 Map *map;
 TextureObject *background;
 Player *player;
 Camera *cam;
+
 
 SDL_Renderer *Game::renderer = nullptr;
 

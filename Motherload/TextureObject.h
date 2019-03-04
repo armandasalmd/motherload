@@ -18,6 +18,7 @@ public:
 	void DeltaOffset(const int dx, const int dy); // move offset
 
 	void ChangeTexture(const char *path);
+	void ChangeBoxSize(int width, int height);
 	void SetDimentions(const int w, const int h);
 	int getX();
 	int getY();

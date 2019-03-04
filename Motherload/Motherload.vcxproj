@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BuildingManager.cpp" />
+    <ClCompile Include="BuildingObject.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -138,7 +140,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mineral.cpp" />
     <ClCompile Include="Models.cpp" />
-    <ClCompile Include="models\MineralModel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TextureObject.cpp" />
@@ -149,13 +150,15 @@
     <Image Include="assets\player.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildingManager.h" />
+    <ClInclude Include="BuildingObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mineral.h" />
+    <ClInclude Include="ModelObjects.h" />
     <ClInclude Include="Models.h" />
-    <ClInclude Include="models\MineralModel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="StaticVars.h" />
     <ClInclude Include="TextureManager.h" />

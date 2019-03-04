@@ -1,9 +1,13 @@
 #pragma once
 #include "sqlite3.h"
+#include "mysqlite.hpp"
 #include "StaticVars.h"
+#include "ModelObjects.h"
 #include <fstream>
 #include <streambuf>
 #include <stdio.h>
+#include <iostream>
+#include <vector>
 
 class Models {
 
@@ -14,11 +18,12 @@ public:
 	bool queryFile(std::string query_file);
 	bool queryString(std::string sql);
 
-	template <typename T> // Model class
-	bool insert(std::string table_name, T model);
-
-	// template <typename T> // Model class
-	// T insert(std::string table_name, int id);
+	UpgradeModel getUpgradeById(std::string upgradeTable, int id);
+	PlayerModel getPlayerById(int id);
+	MineralModel getMineralById(int id);
+	MineralModel getMineralByName(std::string name);
+	BuildingModel getBuildingById(int id);
+	std::vector<InventoryItemModel> getInventoryById(int player_id);
 
 private:
 	Models();

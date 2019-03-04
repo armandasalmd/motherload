@@ -4,7 +4,7 @@
 
 TextureObject::TextureObject(const char *path, int x, int y, bool anim) {
 	ChangeTexture(path);
-	mx = x;
+	mx = x; // real drawing coordinates on the screen
 	my = y;
 	animated = anim;
 }
@@ -25,6 +25,11 @@ void TextureObject::Update() {
 	srcRect.y = offsetY; // moving image texture inside the object box Y
 	destRect.x = mx; // texture on the map cordinate x
 	destRect.y = my; // texture on the map cordinate y
+}
+
+void TextureObject::ChangeBoxSize(int width, int height) {
+	this->width = width;
+	this->height = height;
 }
 
 void TextureObject::Render() {
