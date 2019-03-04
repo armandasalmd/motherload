@@ -80,7 +80,6 @@ void Game::printText(std::string text, int x, int y) {
 }
 
 void Game::printToolbar(int fps) {
-	//printText("Health: 100hp", 5, 0);
 	//printText("Fuel: 6l/10l", 5, Winfo::text_size);
 	//printText("Money: 55£", 5, Winfo::text_size * 2);
 	int *mCord = Map::GetGridCordinates(player->PosX() + Winfo::block_size / 2, player->PosY() + Winfo::block_size / 2);
@@ -90,11 +89,17 @@ void Game::printToolbar(int fps) {
 	printText(line4, 15, 5, Winfo::text_size);
 	std::string line5 = "FPS:" + std::to_string(fps);
 	printText(line5, 15, 5, Winfo::text_size * 2);
+
+
+	printText("Balance: " + std::to_string(player->getPlayerBalance()), 15, 5, Winfo::text_size * 3);
+	printText("Fuel: " + std::to_string(player->getPlayerFuel()), 15, 5, Winfo::text_size * 4);
+	
+	
 	// delete mCord;
 }
 
 void Game::update() {
-	// Make prayer movement here and etc...
+	// Make player movement here and etc...
 	int move_x = 0, 
 		move_y = 0;
 

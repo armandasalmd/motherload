@@ -24,7 +24,44 @@ public:
 	void DeltaX(int dx) { SetCoords(positionX + dx, positionY); }
 	void DeltaY(int dy) { SetCoords(positionX, positionY + dy); }
 
+	// player balance functions
+	int getPlayerBalance() { return cashBalance; }
+	void setPlayerBalance(int newBalance) { cashBalance = newBalance; }
+	void increasePlayerBalance(int balanceIncrease) { cashBalance = cashBalance + balanceIncrease; }
+	void decreasePlayerBalance(int balanceDecrease) { if (cashBalance - balanceDecrease < 0) { throw "Not enough cash"; } else cashBalance = cashBalance - balanceDecrease; }
+
+	// Player fuel functions
+	int getPlayerFuel() { return fuelAmount; }
+	void setPlayerFuel(int newFuelLevel) { fuelAmount = newFuelLevel; }
+	void increaseFuel(int fuelIncrease) {fuelAmount = fuelAmount + fuelIncrease ; }
+	void decreaseFuel(int fuelDecrease) { if (fuelAmount - fuelDecrease <= 0) { throw "Tank empty"; } else  fuelAmount = fuelAmount - fuelDecrease;  }
+
+
+
 private:
 	int positionX = 0; // player x position in pixels on the map
 	int positionY = 0; // player y position in pixels on the map
+
+	
+	int cashBalance = 500;
+	int fuelAmount = 100;
+
+};
+
+
+class Engine {
+
+};
+
+class Drill {
+
+};
+
+class fuelTankCapacity {
+
+};
+
+
+class Inventory {
+
 };
