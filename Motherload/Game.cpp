@@ -52,7 +52,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	background = new TextureObject("assets/background.png");
 	player = new Player("assets/player.png", 0, 0, false);
 	cam = new Camera(this, player, background);
-	map = new Map(player);
+	map = new Map();
 
 	background->SetDimentions(Winfo::width, Winfo::height);
 	background->DeltaOffset(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);

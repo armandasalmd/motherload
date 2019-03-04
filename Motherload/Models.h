@@ -9,7 +9,6 @@
 #include <iostream>
 #include <vector>
 
-
 #ifndef MODEL_DATABASE_FILENAME
 #define MODEL_DATABASE_FILENAME Winfo::db_name
 #endif

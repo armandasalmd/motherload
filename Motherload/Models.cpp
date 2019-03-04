@@ -51,7 +51,8 @@ bool Models::queryFile(std::string query_file) {
 
 bool Models::queryString(std::string sql) {
 	// REFERENCE BEGIN: https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
-	char *errorMsg = "Query error";
+	char errorMsgStr[] = "Query error";
+	char *errorMsg = errorMsgStr;
 	qResult = sqlite3_exec(db, sql.c_str(), Models::callback, 0, &errorMsg); // execution
 	if (qResult != SQLITE_OK) {
 		fprintf(stderr, "SQL error: %s\n", errorMsg);

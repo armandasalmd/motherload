@@ -7,6 +7,7 @@
 #include "StaticVars.h"
 #include "player.h"
 #include "TextureManager.h"
+#include "Camera.h"
 
 #include <vector>
 #include <iostream>
@@ -16,8 +17,6 @@
 #include <cstdlib>
 #include <array>
 #include <ctime>
-
-#include "Camera.h"
 
 class Map {
 public:
@@ -30,7 +29,7 @@ public:
 		SDL_Texture* tex;
 	};
 	
-	Map(Player *player);
+	Map();
 	~Map();
 
 	void LoadMap(); // loads map creating new one

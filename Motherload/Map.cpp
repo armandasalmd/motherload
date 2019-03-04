@@ -1,11 +1,10 @@
 #pragma once
 #include "Map.h"
-#include "Camera.h"
 
 //#include <fstream>
 //#include <sstream>
 
-Map::Map(Player *player) {
+Map::Map() {
 	// map initialization
 	LoadBlockPaths();
 	LoadMap();
