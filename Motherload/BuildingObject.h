@@ -10,14 +10,13 @@ class BuildingObject : public TextureObject {
 public:
 
 
-	BuildingObject() : TextureObject("") { };
+	BuildingObject() : TextureObject("") {  };
 
 	BuildingObject(BuildingModel model) : TextureObject(model.getTexturePath().c_str()) {
-		//std::cout << model.getTexturePath().c_str() << std::endl;
+		
 		mModel = model;
 		posx = model.getBuildingX() * Winfo::block_size;
 		posy = model.getBuildingY() * Winfo::block_size;
-
 	}
 
 

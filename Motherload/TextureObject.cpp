@@ -11,6 +11,8 @@ TextureObject::TextureObject(const char *path, int x, int y, bool anim) {
 
 TextureObject::TextureObject(const char *path) {
 	ChangeTexture(path);
+	mx = 0; my = 0;
+	animated = false;
 }
 
 void TextureObject::Update() {
