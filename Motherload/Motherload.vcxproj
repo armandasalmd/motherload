@@ -141,6 +141,7 @@
     <ClCompile Include="Mineral.cpp" />
     <ClCompile Include="Models.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TextureObject.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="ModelObjects.h" />
     <ClInclude Include="Models.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="StaticVars.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TextureObject.h" />
