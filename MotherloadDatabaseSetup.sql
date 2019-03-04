@@ -1,39 +1,39 @@
 CREATE TABLE Player(
-	playerID			varchar	PRIMARY KEY,
-	drillLevel			varchar	DEFAULT 1,
-	backpackLevel		varchar	DEFAULT 1,
-	FOREIGN KEY(drillLevel)		REFERENCES Drill(drillLevel),
-	FOREIGN KEY(backpackLevel)	REFERENCES Backpack(backpackLevel)
+	playerID						varchar	PRIMARY KEY,
+	drillLevel						varchar	DEFAULT 1,
+	backpackLevel					varchar	DEFAULT 1,
+	FOREIGN KEY(drillLevel)			REFERENCES Drill(drillLevel),
+	FOREIGN KEY(backpackLevel)		REFERENCES Backpack(backpackLevel)
 );
 
 CREATE TABLE Backpack(
-	backpackLevel		varchar PRIMARY KEY,
-	backpackCapacity	varchar
+	backpackLevel					varchar PRIMARY KEY,
+	backpackCapacity				varchar
 );
 
 CREATE TABLE Drill(
-	drillLevel			varchar PRIMARY KEY,
-	drillStrength		varchar
+	drillLevel						varchar PRIMARY KEY,
+	drillStrength					varchar
 );
 
 CREATE TABLE hasMinerals(
-	playerID			varchar,
-	mineralID			varchar,
-	mineralQuantity		varchar
-	FOREIGN KEY(playerID)		REFERENCES Player(playerID),
-	FOREIGN KEY(mineralID)		REFERENCES Minerals(mineralID),
+	playerID						varchar,
+	mineralID						varchar,
+	mineralQuantity					varchar
+	FOREIGN KEY(playerID)			REFERENCES Player(playerID),
+	FOREIGN KEY(mineralID)			REFERENCES Minerals(mineralID),
 	PRIMARY KEY(playerID, mineralID)		
 );
 
 CREATE TABLE Minerals(
-	mineralID			varchar	PRIMARY KEY,
-	mineralName			varchar,
-	mineralValue		decimal(7,2),
-	mineralWeight		varchar,
-	mineralStrength		varchar,
-	mineralFrequency	varchar,
-	mineralHealth		varchar,
-	texturePath			nvarchar(260)
+	mineralID						varchar	PRIMARY KEY,
+	mineralName						varchar,
+	mineralValue					decimal(7,2),
+	mineralWeight					varchar,
+	mineralStrength					varchar,
+	mineralFrequency				varchar,
+	mineralHealth					varchar,
+	texturePath						nvarchar(260)
 );
 
 INSERT INTO Backpack 
@@ -80,3 +80,9 @@ WHERE playerID = currentPlayerID;
 UPDATE hasMinerals
 SET mineralQuantity = newQuantity
 WHERE playerID = currentPlayerID AND mineralID = mineralToUpdate;
+
+SELECT mineralName, mineralValue     /* Select statement for shop information */
+FROM Mineral
+
+SELECT *							 /* Select statement for upgrade shop */
+FROM Drill
