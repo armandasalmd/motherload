@@ -147,7 +147,6 @@
     <Image Include="assets\dirt.png" />
     <Image Include="assets\grass.png" />
     <Image Include="assets\player.png" />
-    <Image Include="assets\water.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />

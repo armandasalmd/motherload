@@ -97,8 +97,5 @@
     <Image Include="assets\player.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\water.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>
