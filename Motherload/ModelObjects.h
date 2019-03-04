@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <string>
 #include <vector>
 //#include "Models.h"
@@ -17,7 +16,8 @@ public:
 		mineral_id = m_mineral_id;
 		quantity = m_quantity;
 	}
-
+	
+	// usually we cannot access obj private attributes, but friend allows us to do so
 	friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
 	{
 		os << obj.mineral_id << " (qty " << obj.quantity << ")";

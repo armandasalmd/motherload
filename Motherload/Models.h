@@ -9,6 +9,11 @@
 #include <iostream>
 #include <vector>
 
+
+#ifndef MODEL_DATABASE_FILENAME
+#define MODEL_DATABASE_FILENAME Winfo::db_name
+#endif
+
 class Models {
 
 public:
@@ -33,3 +38,14 @@ private:
 
 	static int callback(void *data, int argc, char **argv, char **azColName);
 };
+
+//
+//#define MODELS_DATABASE_FILENAME "mockdatabase.sqlite"
+//#include "Models.h"
+//
+//
+//TEST_CASE()
+//{
+//	Models( "mockdatabase.sqlite" )
+//	{}
+//}

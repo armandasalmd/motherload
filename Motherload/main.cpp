@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 	
 	//Models *m = Models::getInstance();
 	//Models::getInstance()->queryString("SELECT * FROM Persons;"); // initializing Models
-	Models::getInstance();
+	//Models::getInstance();
 
 	game = new Game();
 	game->init(Winfo::title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
