@@ -65,3 +65,18 @@ VALUES
 	(8,		"Emerald",	1500,	100,	20,	5,	90,		"assets/emerald.png"),
 	(9,		"Diamond",	5000,	250,	25,	5,	120,	"assets/diamond.png"),
 	(10,	"Water",	0,		0,		0,	0,	0,		"assets/water.png");
+
+
+	/* The following to be used within the C++ code as part of functions */
+
+UPDATE Player
+SET drillLevel = newDrillLevel
+WHERE playerID = currentPlayerID;
+
+UPDATE Player
+SET backpackLevel = newBackpackLevel
+WHERE playerID = currentPlayerID;
+
+UPDATE hasMinerals
+SET mineralQuantity = newQuantity
+WHERE playerID = currentPlayerID AND mineralID = mineralToUpdate;
