@@ -1,6 +1,12 @@
 .vs/*
 *.txt
-x64/*
 Motherload/x64/*
 git/*
 UnitTest/x64/*
+
+x64/Debug/Motherload.exe
+x64/Debug/Motherload.ilk
+x64/Debug/Motherload.pdb
+x64/Debug/UnitTest.exe
+x64/Debug/UnitTest.ilk
+x64/Debug/UnitTest.pdb

@@ -230,3 +230,11 @@ std::vector<InventoryItemModel> Models::getInventoryById(int player_id) {
 		return items;
 	}
 }
+
+void Models::updatePlayerInventory(PlayerModel *player) {
+
+	//std::string query1 = "DELETE FROM InventoryItems WHERE player_id=" + std::to_string(player->getPlayerId()) + ";";
+
+
+
+}

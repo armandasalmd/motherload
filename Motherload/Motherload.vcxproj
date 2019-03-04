@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{16A07D86-5AEE-497F-8390-EFC0CC0A8786}</ProjectGuid>
     <RootNamespace>Motherload</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,6 +141,7 @@
     <ClCompile Include="Mineral.cpp" />
     <ClCompile Include="Models.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TextureObject.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="ModelObjects.h" />
     <ClInclude Include="Models.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="StaticVars.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TextureObject.h" />
