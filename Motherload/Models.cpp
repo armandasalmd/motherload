@@ -97,7 +97,7 @@ PlayerModel Models::getPlayerById(int id) {
 		std::string query = "SELECT * FROM (Player INNER JOIN Map ON Player.player_id=Map.player_id) WHERE Player.player_id=" + std::to_string(id) + ";";
 		auto cur = mdb.get_statement();
 
-		int *upgrades = new int[5];
+		int upgrades[5] = { -1 };
 		int balance = 0, health = 0;
 		std::string name, json_map;
 
@@ -109,8 +109,8 @@ PlayerModel Models::getPlayerById(int id) {
 				upgrades[i] = cur->get_int(i + 1);
 			}
 			balance = cur->get_int(6);
-			name = cur->get_text(7);
-			health = cur->get_int(8);
+			health = cur->get_int(7);
+			name = cur->get_text(8);
 			json_map = cur->get_text(10);
 		}
 		PlayerModel p1(id, upgrades, balance, name, health, json_map);
@@ -139,6 +139,7 @@ MineralModel Models::getMineralById(int id) {
 			name = cur->get_text(1); // mineral_name
 			for (int i = 0; i < 4; i++)
 				attr[i] = cur->get_int(i + 2);
+			tex_path = cur->get_text(6);
 		}
 		return MineralModel(id, name, attr[0], attr[1], attr[2], attr[3], tex_path);
 	}
@@ -210,10 +211,10 @@ std::vector<InventoryItemModel> Models::getInventoryById(int player_id) {
 	std::vector<InventoryItemModel> items;
 	try {
 		sqlite::sqlite mdb(Winfo::db_name.c_str());
-		std::string query = "SELECT mineral_id, quantity FROM InventoryItems WHERE player_id = "
+		std::string query = "SELECT mineral_id, quantity FROM Inventory WHERE player_id = "
 			+ std::to_string(player_id) + ";";
 		auto cur = mdb.get_statement();
-		int mineral_id, quantity; // vars to save row results
+		int mineral_id = -1, quantity = -1; // vars to save row results
 
 		cur->set_sql(query);
 		cur->prepare();

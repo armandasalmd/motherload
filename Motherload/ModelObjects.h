@@ -71,7 +71,7 @@ public:
 		engine_level = upgrades[2];
 		fuel_tank_level = upgrades[3];
 		backpack_level = upgrades[4];
-
+		this->json_map = json_map;
 		this->balance = balance;
 		player_name = name;
 		this->health = health;
@@ -179,7 +179,7 @@ class UpgradeModel {
 	// FuelTank, Backpack, Engine, Hull and Drill tables
 public:
 	// Constructors
-	// UpgradeModel() { level = 0; name = "undefined", price = 0; value = 0.0f; }
+	UpgradeModel() { level = 0; name = "undefined", price = 0; value = 0.0f; }
 
 	UpgradeModel(int mLevel, std::string mName, int mPrice, float mValue) {
 		level = mLevel;
@@ -210,6 +210,8 @@ private:
 
 class MineralModel {
 public:
+	MineralModel() {}
+
 	MineralModel(int id, std::string name, int price, int weight, int frequency, int strength, std::string texture_path) {
 		mineral_id = id;
 		mineral_name = name;
