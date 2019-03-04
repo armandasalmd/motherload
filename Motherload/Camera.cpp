@@ -2,11 +2,12 @@
 #include "Camera.h"
 #include <iostream>
 
-Camera::Camera(Game *game, Player *player, TextureObject *background) {
+Camera::Camera(Game *game, Player *player, TextureObject *background, BuildingManager *buildings) {
 
 	this->game = game;
 	this->player = player;
 	this->background = background;
+	this->buildings = buildings;
 }
 
 void Camera::UpdateAll() {
@@ -24,7 +25,11 @@ void Camera::UpdateAll() {
 		new_player_y = Winfo::height + player->PosY() - WorldInfo::world_height + Winfo::block_size;
 
 	player->SetDrawCoords(new_player_x, new_player_y);
+	// TODO: calculate buildings draw coordinates
+	// TODO: do not render if it is behind the screen
 	player->Update();
+	buildings->SetDrawCoordinates(cCoords); // set ... according to camera coords
+	buildings->UpdateAll();
 	background->SetOffset(cCoords[0], cCoords[1]);
 	background->Update();
 }
@@ -41,6 +46,10 @@ void Camera::RenderBg() {
 }
 void Camera::RenderPlayer() {
 	player->Render();
+}
+
+void Camera::RenderBuildings() {
+	buildings->RenderAll();
 }
 
 int *Camera::calcCameraCoordinates() {

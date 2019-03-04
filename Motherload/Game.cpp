@@ -15,7 +15,7 @@ Map *map;
 TextureObject *background;
 Player *player;
 Camera *cam;
-
+BuildingManager *buildings;
 
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -48,14 +48,19 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	}
 	else
 		isRunning = false;
+
+
 	// Initializing/loading textures of game objects
 	background = new TextureObject("assets/background.png");
 	player = new Player("assets/player.png", 0, 0, false);
-	cam = new Camera(this, player, background);
+	buildings = new BuildingManager();
+	cam = new Camera(this, player, background, buildings);
 	map = new Map();
 
+	buildings->UpdateAll();
 	background->SetDimentions(Winfo::width, Winfo::height);
 	background->DeltaOffset(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
+
 	player->SetCoords(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
 	player->Move(Winfo::block_size * Gsettings::spawn_x, Winfo::block_size * Gsettings::spawn_y);
 	player->Update();
@@ -121,6 +126,7 @@ void Game::render(int fps) {
 	// rendering all objects
 	cam->RenderBg();
 	map->DrawMap(*cam);
+	cam->RenderBuildings();
 	cam->RenderPlayer();
 	printToolbar(fps);
 	SDL_RenderPresent(Game::renderer);

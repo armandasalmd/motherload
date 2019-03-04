@@ -29,6 +29,8 @@ public:
 	BuildingModel getBuildingById(int id);
 	std::vector<InventoryItemModel> getInventoryById(int player_id);
 
+	void updatePlayerInventory(PlayerModel *player);
+
 private:
 	Models();
 	static Models* instance;
