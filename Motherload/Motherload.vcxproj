@@ -139,6 +139,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mineral.cpp" />
+    <ClCompile Include="Mining.cpp" />
     <ClCompile Include="Models.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shop.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mineral.h" />
+    <ClInclude Include="Mining.h" />
     <ClInclude Include="ModelObjects.h" />
     <ClInclude Include="Models.h" />
     <ClInclude Include="Player.h" />

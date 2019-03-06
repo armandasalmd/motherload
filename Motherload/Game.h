@@ -28,6 +28,9 @@ public:
 	void printText(std::string text, int x, int y); // prints given text
 	void printText(std::string text, int font_size, int x, int y); // prints given text
 	void printToolbar(int fps);
+	
+	char getXpress() { return x_key_pressed; }
+	char getYpress() { return y_key_pressed; }
 
 	bool running() { return isRunning; };
 

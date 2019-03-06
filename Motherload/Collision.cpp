@@ -1,6 +1,6 @@
 #include "Collision.h"
 
-void Collision::MovePlayer(Map *m, Player *p, int dx, int dy) {
+void Collision::MovePlayer(Game *game, Map *m, Player *p, int dx, int dy) {
 	// if the following block is air, let player move, else stop him and move him to block touching point
 	// you have to axis for that
 	// Ending grid coordinate must be air!!!!
@@ -11,14 +11,14 @@ void Collision::MovePlayer(Map *m, Player *p, int dx, int dy) {
 	cDelta.x = dx;
 	cDelta.y = dy;
 
-	if (vertEnabled) Collision::MoveVertically(m, p, cDelta);
+	if (vertEnabled) Collision::MoveVertically(game, m, p, cDelta);
 	else p->DeltaY(dy);
 
-	if (horEnabled) Collision::MoveHorizontally(m, p, cDelta);
+	if (horEnabled) Collision::MoveHorizontally(game, m, p, cDelta);
 	else p->DeltaX(dx);
 }
 
-void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) { // controls up/down
+void Collision::MoveVertically(Game *game, Map *m, Player *p, Coord cDelta) { // controls up/down
 	// Stepped player boundaries
 	if (cDelta.y == 0)
 		return;
@@ -50,7 +50,8 @@ void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) { // controls up
 		else 
 			p->SetY((points[0][1] + 1) * 64 - 16);
 	}
-	else if (block_pos > 8) { // player touch bottom wall
+	else if (block_pos > 8) { // player touch bottom 
+		if (game->getYpress() == 'd') { Mining::mineBlock(m, p, (p->PosX() + 32) / 64, p->PosY() / 64 + 1); }
 		m1 = m->GetMap()[points[2][1]][points[2][0]];
 		if (!(points[2][0] == points[3][0] && points[2][1] == points[3][1])) //touches two blocks
 			m2 = m->GetMap()[points[3][1]][points[3][0]];
@@ -66,7 +67,7 @@ void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) { // controls up
 		p->DeltaY(cDelta.y);
 }
 
-void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) { // controls left/right
+void Collision::MoveHorizontally(Game *game, Map *m, Player *p, Coord cDelta) { // controls left/right
 	// Stepped player boundaries
 	if (cDelta.x == 0)
 		return;
@@ -88,6 +89,7 @@ void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) { // controls 
 	bool sameBlock = false;
 
 	if (block_pos > 12) { // player touch right wall
+		if (game->getXpress() == 'r') { Mining::mineBlock(m, p, p->PosX() / 64 + 1, (p->PosY() + 32) / 64); }
 		m1 = m->GetMap()[points[1][1]][points[1][0]];
 		if (!(points[1][0] == points[2][0] && points[1][1] == points[2][1])) // two blocks touched right
 			m2 = m->GetMap()[points[2][1]][points[2][0]];
@@ -102,6 +104,7 @@ void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) { // controls 
 		}
 	}
 	else if (block_pos < -12) { // player touch left wall
+		if (game->getXpress() == 'l') { Mining::mineBlock(m, p, p->PosX() / 64, (p->PosY() + 32) / 64); }
 		m1 = m->GetMap()[points[0][1]][points[0][0]];
 		if (!(points[0][0] == points[3][0] && points[0][1] == points[3][1])) // two blocks touched left
 			m2 = m->GetMap()[points[3][1]][points[3][0]];

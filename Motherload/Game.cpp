@@ -114,7 +114,7 @@ void Game::update() {
 		move_y = y_key_pressed == 'u' ? -Gsettings::step : Gsettings::step;
 	move_y = y_key_pressed == 'u' ? -Gsettings::step : (int)((double)Gsettings::step * Gsettings::gravity);
 	
-	Collision::MovePlayer(map, player, move_x, move_y); // it does the movement, as well as adjustify movement coordinates!
+	Collision::MovePlayer(this, map, player, move_x, move_y); // it does the movement, as well as adjustify movement coordinates!
 
 	// Updating all view objects
 	cam->UpdateAll();
