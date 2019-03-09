@@ -7,13 +7,13 @@
 
 #include <iostream>
 
+enum State { MainMenu, Pause, InGame, GasStation, Market, UpgradesShop, Save };
+
 class Game {
 
 public:
 	Game();
 	~Game();
-
-	enum State { MainMenu, InGame, GasStation, Market, UpgradesShop };
 
 	void setState(State s) { gameState = s; }
 	State getState() { return gameState; }

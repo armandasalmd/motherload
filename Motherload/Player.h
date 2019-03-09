@@ -19,6 +19,10 @@ public:
 	void SetX(int x) { positionX = x; };
 	void SetY(int y) { positionY = y; };
 	
+	// set in air
+	bool IsInAir() { return in_air; }
+	void SetInAir(bool value) { in_air = value; }
+
 	// player map coordinates function
 	void DeltaCoords(int dx, int dy) { SetCoords(positionX + dx, positionY + dy); }
 	void DeltaX(int dx) { SetCoords(positionX + dx, positionY); }
@@ -42,6 +46,7 @@ private:
 	int positionX = 0; // player x position in pixels on the map
 	int positionY = 0; // player y position in pixels on the map
 
+	bool in_air;
 	
 	int cashBalance = 500;
 	int fuelAmount = 100;

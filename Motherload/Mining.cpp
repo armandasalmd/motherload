@@ -7,7 +7,7 @@ void Mining::mineBlock(Map *map, Player *player, int nextX, int nextY) {
 	Mineral mineral = currentMap[nextY][nextX];
 
 	//if (player->getStrength() >= mineral.getStrength() && mineral.getName() != "sky")
-	if (mineral.getName() != "sky")
+	if (mineral.getName() != "sky" && !player->IsInAir())
 	{
 
 		if (mineral.getHealth() <= 0)

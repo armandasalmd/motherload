@@ -16,9 +16,58 @@ void Collision::MovePlayer(Game *game, Map *m, Player *p, int dx, int dy) {
 
 	if (horEnabled) Collision::MoveHorizontally(game, m, p, cDelta);
 	else p->DeltaX(dx);
+	DetectBuildingCollision(game, p);
+	//std::cout << (int)game->getState() << std::endl;
+}
+
+void Collision::DetectBuildingCollision(Game *game, Player *p) {
+	BuildingModel building; // Fuel station
+	int fromX, toX; // building detection boudaries for X
+	int player_pos_x = p->PosX() + Winfo::block_size / 2; // player texture middle x coord
+	int *player_block_y = new int(p->PosY() / Winfo::block_size);
+	// activates entering buildings when player y=4
+	if (*player_block_y == 4) {
+		delete player_block_y; // player y coordinate is no longer needed
+		// as player is on the surface, must check building collision
+		// FUEL STATION detection
+		building = building = Models::getInstance()->getBuildingById(1); // Fuel station
+		fromX = building.getBuildingX() * Winfo::block_size + Winfo::block_size / 2;
+		toX = fromX + Winfo::block_size;
+		if (player_pos_x >= fromX && player_pos_x <= toX) {
+			game->setState(State::GasStation);
+			return;
+		}
+		// MARKET detection
+		building = building = Models::getInstance()->getBuildingById(2); // Market station
+		fromX = building.getBuildingX() * Winfo::block_size + Winfo::block_size;
+		toX = fromX + Winfo::block_size;
+		if (player_pos_x >= fromX && player_pos_x <= toX) {
+			game->setState(State::Market);
+			return;
+		}
+		// UPGRADES SHOP detection
+		building = building = Models::getInstance()->getBuildingById(3); // Upgrades shop
+		fromX = building.getBuildingX() * Winfo::block_size + Winfo::block_size;
+		toX = fromX + Winfo::block_size;
+		if (player_pos_x >= fromX && player_pos_x <= toX) {
+			game->setState(State::UpgradesShop);
+			return;
+		}
+		// UPGRADES SHOP detection
+		building = building = Models::getInstance()->getBuildingById(0); // Save flag
+		fromX = building.getBuildingX() * Winfo::block_size;
+		toX = fromX + Winfo::block_size;
+		if (player_pos_x >= fromX && player_pos_x <= toX) {
+			game->setState(State::Save);
+			return;
+		}
+		
+	}
+	game->setState(State::InGame);
 }
 
 void Collision::MoveVertically(Game *game, Map *m, Player *p, Coord cDelta) { // controls up/down
+	int saved_y_pos = p->PosY(); // used for in_air calculation
 	// Stepped player boundaries
 	if (cDelta.y == 0)
 		return;
@@ -50,7 +99,7 @@ void Collision::MoveVertically(Game *game, Map *m, Player *p, Coord cDelta) { //
 		else 
 			p->SetY((points[0][1] + 1) * 64 - 16);
 	}
-	else if (block_pos > 8) { // player touch bottom 
+	else if (block_pos > 8) { // player touch bottom
 		if (game->getYpress() == 'd') { Mining::mineBlock(m, p, (p->PosX() + 32) / 64, p->PosY() / 64 + 1); }
 		m1 = m->GetMap()[points[2][1]][points[2][0]];
 		if (!(points[2][0] == points[3][0] && points[2][1] == points[3][1])) //touches two blocks
@@ -63,8 +112,9 @@ void Collision::MoveVertically(Game *game, Map *m, Player *p, Coord cDelta) { //
 		else
 			p->SetY((points[2][1] - 1) * 64);
 	}
-	else // if no collision found, move like default 
+	else // if no collision found, move like default
 		p->DeltaY(cDelta.y);
+	p->SetInAir(saved_y_pos != p->PosY()); // sets: is player in air?
 }
 
 void Collision::MoveHorizontally(Game *game, Map *m, Player *p, Coord cDelta) { // controls left/right

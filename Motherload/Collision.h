@@ -4,6 +4,10 @@
 #include "Map.h"
 #include "Mining.h"
 #include "Game.h"
+// Used in buildings detection:
+#include "Models.h"
+#include "ModelObjects.h"
+#include "StaticVars.h"
 
 class Collision {
 
@@ -12,4 +16,5 @@ public:
 private:
 	static void MoveHorizontally(Game *game, Map *m, Player *p, Coord cDelta);
 	static void MoveVertically(Game *game, Map *m, Player *p, Coord cDelta);
+	static void DetectBuildingCollision(Game *game, Player *p);
 };
