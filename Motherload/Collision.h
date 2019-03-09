@@ -13,8 +13,8 @@ class Collision {
 
 public:
 	static void MovePlayer(Game *game, Map *m, Player *p, int dx, int dy);
+	static void DetectBuildingCollision(Game *game, Player *p);
 private:
 	static void MoveHorizontally(Game *game, Map *m, Player *p, Coord cDelta);
 	static void MoveVertically(Game *game, Map *m, Player *p, Coord cDelta);
-	static void DetectBuildingCollision(Game *game, Player *p);
 };
