@@ -15,7 +15,14 @@ public:
 	Game();
 	~Game();
 
-	void setState(State s) { gameState = s; }
+	void setState(State s) {
+		// bool: wait for InGame state to be set
+		if (haltForInGame && s == State::InGame)
+			haltForInGame = false;
+		else
+			gameState = s; // GasStation
+
+	}
 	State getState() { return gameState; }
 
 
@@ -39,6 +46,8 @@ public:
 private:
 	bool isRunning;
 	State gameState = InGame;
+	bool haltForInGame = false;
+
 	SDL_Window *window;
 
 	char x_key_pressed = '*'; // * - stand still, l - left, r - right

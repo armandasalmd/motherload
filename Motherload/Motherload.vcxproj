@@ -140,6 +140,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mineral.cpp" />
     <ClCompile Include="Mining.cpp" />
+    <ClCompile Include="ModelObjects.cpp" />
     <ClCompile Include="Models.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shop.cpp" />

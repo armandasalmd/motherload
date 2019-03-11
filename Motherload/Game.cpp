@@ -130,6 +130,7 @@ void Game::render(int fps) {
 	cam->RenderPlayer();
 	printToolbar(fps);
 	SDL_RenderPresent(Game::renderer);
+	// std::cout << getState() << std::endl;
 }
 
 void Game::handleEvents() {
