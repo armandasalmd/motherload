@@ -19,13 +19,21 @@ BuildingManager *buildings;
 
 SDL_Renderer *Game::renderer = nullptr;
 
-double gravity_speed = 1;
-double acceleration = 0;
+Game::Game() {
+	/*PlayerModel pModel = Models::getInstance()->getPlayerById(2);
+	std::vector<InventoryItemModel> *inventory = pModel.getInventory();
+	std::cout << inventory->size() << std::endl;
+	InventoryItemModel newItem = InventoryItemModel(2, 5, 2);
+	inventory->push_back(newItem);
+	
+	std::cout << inventory->size() << std::endl;
+	std::cout << pModel.getInventory()->size() << std::endl;*/
+}
+Game::~Game() {
+	
+}
 
-Game::Game() {}
-Game::~Game() {}
-
-void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen) {
+void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int player_id) {
 	// Preparing game objects
 	int flags = 0;
 	if (fullscreen)
@@ -49,10 +57,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	else
 		isRunning = false;
 
-
 	// Initializing/loading textures of game objects
 	background = new TextureObject("assets/background.png");
 	player = new Player("assets/player.png", 0, 0, false);
+	player->loadPlayerModel(player_id); // loading player model information from db
+
 	buildings = new BuildingManager();
 	cam = new Camera(this, player, background, buildings);
 	map = new Map();
@@ -170,6 +179,8 @@ void Game::handleEvents() {
 }
 
 void Game::clean() {
+	player->savePlayerModel();
+	std::cout << "Player saved to database" << std::endl;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

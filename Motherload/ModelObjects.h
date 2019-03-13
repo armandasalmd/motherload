@@ -17,9 +17,9 @@ public:
 	}
 
 	// Getters
-	int getPlayerId() { return player_id; }
-	int getMineralId() { return mineral_id; }
-	int getQuantity() { return quantity; }
+	inline int getPlayerId() { return player_id; }
+	inline int getMineralId() { return mineral_id; }
+	inline int getQuantity() { return quantity; }
 
 
 	// TODO: 
@@ -41,7 +41,7 @@ public:
 	void setInventory(std::vector<InventoryItemModel> items) { inventory = items; }
 
 	// Getters
-	int getPlayerId() { return player_id; }
+	inline int getPlayerId() { return player_id; }
 	int getUpgrade(const std::string upgrade_name) {
 		// Like switch
 		if (upgrade_name == "drill") return drill_level;
@@ -51,13 +51,14 @@ public:
 		else if (upgrade_name == "backpack") return backpack_level;
 		return 0;
 	}
-	int getBalance() { return balance; }
-	std::string getPlayerName() { return player_name; }
-	int getHealth() { return health; }
-	std::string getMapJson() { return json_map; }
+	inline int getBalance() { return balance; }
+	inline std::string getPlayerName() { return player_name; }
+	inline int getHealth() { return health; }
+	inline std::string getMapJson() { return json_map; }
 	int getItemsCount();
 
-	std::vector<InventoryItemModel> getInventory();
+	std::vector<InventoryItemModel> *getInventory();
+	void addItem(InventoryItemModel item);
 
 private:
 	int player_id;
@@ -74,8 +75,8 @@ public:
 	MapModel(int player_id, std::string json_value);
 
 	// Getters
-	int getPlayerId() { return player_id; }
-	std::string getJsonValue() { return json_value; }
+	inline int getPlayerId() { return player_id; }
+	inline std::string getJsonValue() { return json_value; }
 
 	/// TODO: Need backward converstion to map
 	// std::vector<std::vector<Mineral>> getMap() { return new std::vector<std::vector<Mineral>>() }
@@ -96,12 +97,12 @@ public:
 	}
 
 	// Getters
-	int getId() { return building_id; }
-	std::string getName() { return building_name; }
-	std::string getTexturePath() { return texture_path; }
-	int getBuildingX() { return buildingX; }
-	int getBuildingY() { return buildingY; }
-	int getWidth() { return width; }
+	inline int getId() { return building_id; }
+	inline std::string getName() { return building_name; }
+	inline std::string getTexturePath() { return texture_path; }
+	inline int getBuildingX() { return buildingX; }
+	inline int getBuildingY() { return buildingY; }
+	inline int getWidth() { return width; }
 
 private:
 	int building_id;
@@ -125,10 +126,10 @@ public:
 	}
 
 	// Getters
-	int getLevel() { return level; };
-	std::string getName() { return name; };
-	int getPrice() { return price; };
-	float getValue() { return value; };
+	inline int getLevel() { return level; };
+	inline std::string getName() { return name; };
+	inline int getPrice() { return price; };
+	inline float getValue() { return value; };
 
 	// Setters. We dont want to allow to change values!
 private:
@@ -150,13 +151,13 @@ public:
 	}
 
 	// Getters
-	int getId() { return mineral_id; }
-	std::string getName() { return mineral_name; }
-	int getPrice() { return price; }
-	int getWeight() { return weight; }
-	int getFrequency() { return frequency; }
-	int getStrength() { return strength; }
-	std::string getTexturePath() { return texture_path; }
+	inline int getId() { return mineral_id; }
+	inline std::string getName() { return mineral_name; }
+	inline int getPrice() { return price; }
+	inline int getWeight() { return weight; }
+	inline int getFrequency() { return frequency; }
+	inline int getStrength() { return strength; }
+	inline std::string getTexturePath() { return texture_path; }
 
 	// Setters. We dont want to allow to change values!
 private:

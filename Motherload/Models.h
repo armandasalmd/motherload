@@ -22,6 +22,8 @@ public:
 	bool queryFile(std::string query_file);
 	bool queryString(std::string sql);
 
+	//void savePlayerAndInventory();
+
 	UpgradeModel getUpgradeById(std::string upgradeTable, int id);
 	PlayerModel getPlayerById(int id);
 	MineralModel getMineralById(int id);

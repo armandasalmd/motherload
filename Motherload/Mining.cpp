@@ -14,6 +14,7 @@ void Mining::mineBlock(Map *map, Player *player, int nextX, int nextY) {
 		{
 			//Increase player pos by a little amount towards the new block
 			Mineral newMin("sky");
+			player->addMineralToInv(map->GetMap()[nextY][nextX]); // old mineral needed for inventory update
 			map->GetMap().at(nextY).at(nextX) = newMin;
 		}
 		else

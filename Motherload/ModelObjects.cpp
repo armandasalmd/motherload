@@ -46,16 +46,21 @@ PlayerModel::PlayerModel(int id, int *upgrades, int balance, std::string name, i
 }
 
 int PlayerModel::getItemsCount() { 
-	return getInventory().size();
+	return (*getInventory()).size();
 }
 
-std::vector<InventoryItemModel> PlayerModel::getInventory() {
+std::vector<InventoryItemModel> *PlayerModel::getInventory() {
 	if (inventory.size() != 0)
-		return inventory;
+		return &inventory;
 	else { // inventory is not loaded, request for it!
 		inventory = Models::getInstance()->getInventoryById(player_id);
-		return inventory;
+		return &inventory;
 	}
+}
+
+void PlayerModel::addItem(InventoryItemModel item) {
+	getInventory(); // updates if empty
+	inventory.push_back(item);
 }
 
 MapModel::MapModel(int player_id, std::string json_value) {

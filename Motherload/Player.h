@@ -1,5 +1,8 @@
 #pragma once
 #include "TextureObject.h"
+#include "ModelObjects.h"
+#include "Models.h"
+#include "Mineral.h"
 
 class Player: public TextureObject {
 public:
@@ -40,7 +43,10 @@ public:
 	void increaseFuel(int fuelIncrease) {fuelAmount = fuelAmount + fuelIncrease ; }
 	void decreaseFuel(int fuelDecrease) { if (fuelAmount - fuelDecrease <= 0) { throw "Tank empty"; } else  fuelAmount = fuelAmount - fuelDecrease;  }
 
-
+	void loadPlayerModel(int player_id);
+	void savePlayerModel();
+	PlayerModel getPlayerModel();
+	void addMineralToInv(Mineral item);
 
 private:
 	int positionX = 0; // player x position in pixels on the map
@@ -50,23 +56,5 @@ private:
 	
 	int cashBalance = 500;
 	int fuelAmount = 100;
-
-};
-
-
-class Engine {
-
-};
-
-class Drill {
-
-};
-
-class fuelTankCapacity {
-
-};
-
-
-class Inventory {
-
+	PlayerModel pModel; // encapsulation
 };

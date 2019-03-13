@@ -59,7 +59,7 @@ bool Models::queryString(std::string sql) {
 		sqlite3_free(errorMsg);
 	}
 	else {
-		fprintf(stdout, "Query established successfully\n");
+		//fprintf(stdout, "Query established successfully\n");
 		return true;
 	}
 	// REFERENCE END;

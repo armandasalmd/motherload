@@ -26,7 +26,7 @@ public:
 	State getState() { return gameState; }
 
 
-	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, int player_id);
 	
 	void handleEvents();
 	void update();
