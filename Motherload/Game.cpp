@@ -129,7 +129,7 @@ void Game::render(int fps) {
 	cam->RenderBuildings();
 	cam->RenderPlayer();
 	printToolbar(fps);
-	SDL_RenderPresent(Game::renderer);
+	SDL_RenderPresent(Game::renderer);	
 }
 
 void Game::handleEvents() {
