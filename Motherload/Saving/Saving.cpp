@@ -1,3 +1,4 @@
+
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
@@ -15,51 +16,123 @@
 #include <boost/serialization/assume_abstract.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <modelObject>
+#include <models>
 
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
 using boost::property_tree::write_json;
 
-void ReadWrite() {
-  // Write json.
-  ptree pt;
-  pt.put ("test", "test");
-  std::ostringstream buf; 
-  write_json (buf, pt, false);
-  std::string json = buf.str();
-
-  // Read json.
-  ptree pt2;
-  std::istringstream is (json);
-  read_json (is, pt2);
-  std::string foo = pt2.get<std::string> ("testtest");
-}
-
-std::string map2json (const std::mapGet()<std::string, std::string>& mapGet()) {
-  ptree pt; 
-  for (auto& entry: map) 
-      pt.put (entry.first, entry.second);
-  std::ostringstream buf; 
-  write_json (buf, pt, false); 
-  return buf.str();
-}
-
 
 class Save
 {
-    friend std::ostream & operator<<(std::ostream &os, const mapGet() &gp);
-    friend class boost::serialization::access;
-    int degrees;
-    int minutes;
-    float seconds;
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int mapGet()){
-        ar & degrees & minutes & seconds;
+    void ReadWrite() {
+    // Write json.
+    ptree pt;
+    pt.put ("test", "test");
+    std::ostringstream buf; 
+    write_json (buf, pt, false);
+    std::string json = buf.str();
+
+    // Read json.
+    ptree pt2;
+    std::istringstream is (json);
+    read_json (is, pt2);
+    std::string foo = pt2.get<std::string> ("testtest");
     }
+
+    std::string map2json (const std::mapGet()<std::string, std::string>& mapGet()) {
+    ptree pt; 
+    for (auto& entry: map) 
+        pt.put (entry.first, entry.second);
+    std::ostringstream buf; 
+    write_json (buf, pt, false); 
+    return buf.str();
+    }
+
+}
+
 public:
     
-   Save_State(){};
+   Save_State(){;
     Save_State(int _d, int _m, float _s) : 
         degrees(_d), minutes(_m), seconds(_s)
-    {}
-};
+   }
+
+class Update
+{
+    int main()
+    {
+        StderrLog log;
+        Database db("localhost", "root", "", "modelObject", &log); // MySQL specific
+        if (!db.Connected())
+        {
+            printf("Database not connected - exiting\n");
+            exit(-1);
+        }
+        Query q(db);
+        q.execute("Update mapData set name = 'Save num+1' where num=>1");
+    }
+}
+
+class Load
+{
+    int main()
+    {
+        StderrLog log;
+        Database db("localhost", "root", "", "modelObject", &log); // MySQL specific
+        if (!db.Connected())
+        {
+            printf("Database not connected - exiting\n");
+            exit(-1);
+        }
+        Query q(db);
+        q.get_result("select * from MapID");
+        while (q.fetch_row())
+        {
+            long num = q.getval();
+            std::string name = q.getstr();
+            printf("#%ld: %s\n", num, name.c_str());
+        }
+        q.free_result();
+
+                Query q(db);
+        q.get_result("select * from PlayerID");
+        while (q.fetch_row())
+        {
+            long num = q.getval();
+            std::string name = q.getstr();
+            printf("#%ld: %s\n", num, name.c_str());
+        }
+        q.free_result();
+    }
+}
+
+class Save
+{
+    int main()
+    {
+        StderrLog log;
+        Database db("localhost", "root", "", "modelObject, &log); // MySQL specific
+        if (!db.Connected())
+        {
+            printf("Database not connected - exiting\n");
+            exit(-1);
+        }
+        Query q(db);
+        q.get_result(
+            "select playerID.name,mapID.name,SaveID.amount from saves as x"
+            "insert player = playerID.num, getMap = MapID");
+        while (q.fetch_row())
+        {
+            std::string playerID = q.getstr();
+            std::string mapID= q.getstr();
+            long value = q.getval();
+            printf("%s saved %ld \n",
+                SaveID.c_str(),
+                amount,
+                (amount == 1) ? "" : "s",
+                SaveID.c_str());
+        }
+        q.free_result();
+}
