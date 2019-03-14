@@ -15,7 +15,7 @@ Models::getInstance();
 
 * Sometimes if code is short enough you can align multiple line comments
 ```c++
-	game->handleEvents();	// handle any user input
+	game->handleEvents();		// handle any user input
 	game->update();			// update all objects eg. positions etc.
 	game->render(fps);		// render changes to the display
 ```
