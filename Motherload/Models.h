@@ -1,4 +1,5 @@
-// <summary>Class that acts like proxy and handles database queries</summary>
+// <summary>Class that acts like PROXY(only DB access point) as well as 
+//		SINGLETON(single object) and handles database queries</summary>
 // <remarks>Every request(get method) returns Model Object(s)</remarks>
 // <author>barkausa</author>
 
@@ -14,18 +15,19 @@
 #include <vector>
 
 class Models {
-
 public:
-	// Singleton based instance
+	// __________ Singleton based instance __________
 	static Models *getInstance();
-	// Deconstructor
+	// __________ Deconstructor __________
 	~Models();
 
-	// Basic query excutions
+	// __________ Basic query excutions __________
+	/* <summary>Executes SQL from given file</summary> */
 	bool queryFile(std::string query_file);
+	/* <summary>Executes SQL from given string(arg)</summary> */
 	bool queryString(std::string sql);
 
-	// Getters (funcs grabs data from database)
+	// __________ Getters (funcs grabs data from database) __________
 	UpgradeModel getUpgradeById(std::string upgradeTable, int id);
 	PlayerModel getPlayerById(int id);
 	MineralModel getMineralById(int id);
@@ -33,12 +35,29 @@ public:
 	BuildingModel getBuildingById(int id);
 	std::vector<InventoryItemModel> getInventoryById(int player_id);
 
-	/// TODO: void savePlayerAndInventory();
+
+	inline void savePlayerAndInventory(PlayerModel *p) { 
+		savePlayer(p);
+		saveInventory(p);
+	};
+	/*
+	<summary>Saves player status/upgrades to DB</summary>
+	<param name="p">Player to save</param>
+	*/
+	void savePlayer(PlayerModel *p);
+	/*
+	<summary>Saves player inventory to DB</summary>
+	<param name="p">Player to save</param>
+	*/
+	void saveInventory(PlayerModel *p);
 private:
 	Models();
 	static Models* instance;
 	sqlite3 *db;
 	int qResult;	// query status
-	// Function: Console print out SELECT output
+	/* 
+	<summary>Prints in Console SELECT output</summary>
+	<remarks>Works only with funcs: queryFile or queryString</remarks>
+	*/
 	static int callback(void *data, int argc, char **argv, char **azColName);
 };

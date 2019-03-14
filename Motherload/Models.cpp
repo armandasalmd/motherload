@@ -229,3 +229,42 @@ std::vector<InventoryItemModel> Models::getInventoryById(int player_id) {
 		return items;
 	}
 }
+
+void Models::savePlayer(PlayerModel *p) {
+	Models::getInstance()->queryString("DELETE FROM Player WHERE player_id="
+		+ std::to_string(p->getPlayerId()) + ";");
+	std::string args[] = { std::to_string(p->getPlayerId()),
+		std::to_string(p->getUpgrade("drill")),
+		std::to_string(p->getUpgrade("hull")),
+		std::to_string(p->getUpgrade("engine")),
+		std::to_string(p->getUpgrade("fuel tank")),
+		std::to_string(p->getUpgrade("backpack")),
+		std::to_string(p->getBalance()),
+		std::to_string(p->getHealth()),
+		p->getPlayerName()
+	};
+	std::string sql_insert = "INSERT INTO Player VALUES ("; // ...);
+	for (std::string str : args)
+		sql_insert.append(str + ",");
+	sql_insert.pop_back();
+	sql_insert.append(");");
+	Models::getInstance()->queryString(sql_insert);
+	//std::cout << sql_insert << std::endl;
+}
+
+void Models::saveInventory(PlayerModel *p) {
+	Models::getInstance()->queryString("DELETE FROM Inventory WHERE player_id = "
+		+ std::to_string(p->getPlayerId()) + ";"); // deletes old values
+	if (p->getItemsCount() > 0) { // if inventory not empty
+		std::string sql = "INSERT INTO Inventory VALUES ";
+		std::vector<InventoryItemModel> *newItems = p->getInventory();
+		std::vector<InventoryItemModel>::iterator end = newItems->end();
+		for (std::vector<InventoryItemModel>::iterator it = newItems->begin(); it != end; it++)
+			sql += "(" + std::to_string(it->getPlayerId()) + "," + std::to_string(it->getMineralId()) + ","
+			+ std::to_string(it->getQuantity()) + "),";
+		sql.pop_back(); // pop last comma
+		sql.push_back(';'); // add ;
+		Models::getInstance()->queryString(sql);
+		//std::cout << sql << std::endl;
+	}
+}

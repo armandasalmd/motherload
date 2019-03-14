@@ -15,6 +15,10 @@ public:
 	// __________ Rendering __________
 	void UpdateAll();
 	void RenderAll();
+	/* 
+	<summary>calculates drawing coords.(on screen) for every building</summary>
+	<param name="cCoords">camera coords.</param> 
+	*/
 	void SetDrawCoordinates(int *cCoords);
 private:
 	std::array<BuildingObject, 4> buildings;

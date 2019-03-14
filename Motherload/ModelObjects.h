@@ -1,4 +1,5 @@
 // <summary>every class represents a table in database - table models</summary>
+// <remarks>all models has custom printing func (operator<<)</remarks>
 // <author>barkausa</author>
 
 #pragma once
@@ -50,9 +51,14 @@ public:
 	inline std::string getPlayerName() { return player_name; }
 	inline int getHealth() { return health; }
 	inline std::string getMapJson() { return json_map; }
-	int getItemsCount();
+	int getItemsCount();	// Current inventory item count
+	std::vector<InventoryItemModel> *getInventory();
+	
+	/* 
+	<param name="upgrade_name">selecting specific upgrade</param>
+	<returns>Returns requested upgrade level(int)</returns> 
+	*/
 	int getUpgrade(const std::string upgrade_name) {
-		// Same as switch
 		if (upgrade_name == "drill") return drill_level;
 		else if (upgrade_name == "hull") return hull_level;
 		else if (upgrade_name == "engine") return engine_level;
@@ -62,7 +68,10 @@ public:
 	}
 
 	// __________ Control funcs __________
-	std::vector<InventoryItemModel> *getInventory();
+	/* 
+	<summary>adds mined block to player's inventory</summary>
+	<param name="item">mined block model</param> 
+	*/
 	void addItem(InventoryItemModel item);
 private:
 	// Table attributes

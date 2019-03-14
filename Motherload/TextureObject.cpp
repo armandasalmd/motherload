@@ -28,9 +28,9 @@ void TextureObject::Update() {
 	destRect.y = my; // texture on the map cordinate y
 }
 
-void TextureObject::ChangeBoxSize(int width, int height) {
-	this->width = width;
-	this->height = height;
+void TextureObject::SetDimentions(const int w, const int h) {
+	width = w;
+	height = h;
 }
 
 void TextureObject::Render() {
@@ -56,11 +56,6 @@ int TextureObject::getX() {
 
 int TextureObject::getY() {
 	return my;
-}
-
-void TextureObject::SetDimentions(const int w, const int h) {
-	width = w;
-	height = h;
 }
 
 void TextureObject::SetOffset(const int x, const int y) {

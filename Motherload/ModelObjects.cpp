@@ -107,6 +107,7 @@ std::vector<InventoryItemModel> *PlayerModel::getInventory() {
 }
 
 void PlayerModel::addItem(InventoryItemModel item) {
-	getInventory(); // updates if empty
+	if (getItemsCount() == 0)
+		getInventory();		// updates if empty
 	inventory.push_back(item);
 }

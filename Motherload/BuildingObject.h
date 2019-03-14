@@ -17,13 +17,14 @@ public:
 	inline void SetPosCoords(int x, int y) { posx = x, posy = y; }
 	inline void SetX(int x) { posx = x; }
 	inline void SetY(int y) { posy = y; }
+
 	// __________ Getters __________
 	inline int PosX() { return posx; }
 	inline int PosY() { return posy; }
 	inline BuildingModel GetModel() { return mModel; }
 private:
-	BuildingModel mModel;
-	int posx, posy; // coordinates on the map
+	BuildingModel mModel;	// holds building path, coords. etc.
+	int posx, posy;			// absolute coords on the map
 };
 
 

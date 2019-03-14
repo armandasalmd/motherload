@@ -1,4 +1,5 @@
 // <summary>this class calculates final drawing coordinates and the renders all objects</summary>
+// <remarks>map rendering is excluded because anglissb does it separately</remarks>
 // <author>barkausa</author>
 
 #pragma once
@@ -10,10 +11,10 @@
 
 class Camera {
 public:
-	// this class performs rendering all objects together except Map rendering
-	// but it does not perform object movement
-
 	// __________ Constructors __________
+	/*
+	<summary>Initializes camera object</summary> 
+	*/
 	Camera(Game *game, Player *player, TextureObject *background, BuildingManager *buildings);
 
 	// __________ Rendering __________
@@ -22,6 +23,10 @@ public:
 	void RenderPlayer();
 	void RenderBuildings();
 	void UpdateAll();
+	/*
+	<summary>calculates camera coords according to player position</summary>
+	<returns>int array(size 2) - camera x, y</returns> 
+	*/
 	int *calcCameraCoordinates();
 private:
 	Game *game;
