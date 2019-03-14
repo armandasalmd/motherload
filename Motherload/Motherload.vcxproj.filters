@@ -109,13 +109,52 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\buildings\flag.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\buildings\fuel_station.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\buildings\market.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\buildings\shop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\bronze.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\diamond.png">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="assets\dirt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\emerald.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\gold.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\grass.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\iron.png">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="assets\player.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\ruby.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\silver.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\stone.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,3 +1,9 @@
+/*
+<summary>startup file, counts fps, runs main loop</summary>
+<author>barkausa</author>
+<collab>waheedi</collab>
+*/
+
 #include "SDL.h"
 #include "Game.h"
 #include "StaticVars.h"
@@ -47,7 +53,7 @@ int main(int argc, char *argv[]) {
 
 
 void RenderGame(int fps) {
-	game->handleEvents(); // handle any user input
-	game->update(); // update all objects eg. positions etc.
-	game->render(fps); // render changes to the display
+	game->handleEvents();	// handle any user input
+	game->update();			// update all objects eg. positions etc.
+	game->render(fps);		// render changes to the display
 }

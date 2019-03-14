@@ -148,11 +148,6 @@
     <ClCompile Include="TextureObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\dirt.png" />
-    <Image Include="assets\grass.png" />
-    <Image Include="assets\player.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="BuildingManager.h" />
     <ClInclude Include="BuildingObject.h" />
     <ClInclude Include="Camera.h" />
@@ -168,6 +163,24 @@
     <ClInclude Include="StaticVars.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TextureObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\background.png" />
+    <Image Include="assets\bronze.png" />
+    <Image Include="assets\buildings\flag.png" />
+    <Image Include="assets\buildings\fuel_station.png" />
+    <Image Include="assets\buildings\market.png" />
+    <Image Include="assets\buildings\shop.png" />
+    <Image Include="assets\diamond.png" />
+    <Image Include="assets\dirt.png" />
+    <Image Include="assets\emerald.png" />
+    <Image Include="assets\gold.png" />
+    <Image Include="assets\grass.png" />
+    <Image Include="assets\iron.png" />
+    <Image Include="assets\player.png" />
+    <Image Include="assets\ruby.png" />
+    <Image Include="assets\silver.png" />
+    <Image Include="assets\stone.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
