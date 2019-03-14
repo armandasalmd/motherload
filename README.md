@@ -32,11 +32,11 @@ main.cpp:
 
 * Every function description must be above its head in .h `(if possible)` file:
 	* Function can be described using those as tags:
-		* <summary> description of the function
-		* <remarks> additional comments
-		* <param name=""> description about parameters
-		* <example> if needed give an example
-		* <returns> describes what function returns
+		* "<summary>" description of the function
+		* "<remarks>" additional comments
+		* "<param name="">" description about parameters
+		* "<example>" if needed give an example
+		* "<returns>" describes what function returns
 ```xml
 // <sumarry>
 // Function mines a block, notifies inventory to add mineral
