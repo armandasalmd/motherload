@@ -51,6 +51,28 @@ main.cpp:
 static void mineBlock(Map *map, Player *player, int dx, int dy);
 ```
 
+### In class Function block commenting (example)
+```c++
+class Player: public TextureObject {
+public:
+	// __________ Constructors __________
+	Player(const char *path) : TextureObject(path) {}
+	Player(const char *path, int x, int y, bool anim) : TextureObject(path, x, y, anim) {}
+	
+	// __________ Getters ___________
+	// Player pixel coordinates
+	int PosX() { return positionX; }
+	int PosY() { return positionY; }
+	bool IsInAir() { return in_air; }
+	
+	// __________ Player Movement __________
+	// Move player pixel coordinates around the map
+	void DeltaCoords(int dx, int dy) { SetCoords(positionX + dx, positionY + dy); }
+	void DeltaX(int dx) { SetCoords(positionX + dx, positionY); }
+	void DeltaY(int dy) { SetCoords(positionX, positionY + dy); }
+}
+```
+
 # Installation
 All libraries are linked through relative pathing. Therefore, you don't need to install anything.
 * Make sure you have Windows SDK installed
