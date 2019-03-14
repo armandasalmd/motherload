@@ -59,8 +59,11 @@ All libraries are linked throw relative pathing. Therefore, you don't need to in
 
 ##### There are some tutorials in case you need them:
 [SDL2 installation](https://www.youtube.com/watch?v=QQzAHcojEKg)
+
 [Sqlite DOCS - tutorialspoint](https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm)
+
 [Menu GUI interface (SDL based/ 32bit)](https://github.com/killerrin/SDL-GUI-API)
+
 [Menu GUI interface 2](https://gamedev.stackexchange.com/questions/151458/sdl2-gui-same-window)
 
 ##### SQLite3 installation (Windows):
