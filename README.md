@@ -52,7 +52,7 @@ static void mineBlock(Map *map, Player *player, int dx, int dy);
 ```
 
 # Installation
-All libraries are linked throw relative pathing. Therefore, you don't need to install anything.
+All libraries are linked through relative pathing. Therefore, you don't need to install anything.
 * Make sure you have Windows SDK installed
 * Clone it
 * Ctrl + F5 (run)
