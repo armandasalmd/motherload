@@ -1,7 +1,6 @@
 #include "TextureObject.h"
 #include "TextureManager.h"
 
-
 TextureObject::TextureObject(const char *path, int x, int y, bool anim) {
 	ChangeTexture(path);
 	mx = x; // real drawing coordinates on the screen

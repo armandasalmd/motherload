@@ -172,60 +172,6 @@ void Collision::MoveHorizontally(Game *game, Map *m, Player *p, Coord cDelta) { 
 		p->DeltaX(cDelta.x);
 }
 
-
-//void Collision::MoveHorizontally(Map *m, Player *p, Coord cDelta) {
-//	Coord cStepped; // player middle point coords
-//	cStepped.x = p->PosX() + cDelta.x + Winfo::block_size / 2;
-//	cStepped.y = p->PosY() + 16 ; // we do not manipulate y collition here, leave the same
-//	int player_x_pos_on_block = (p->PosX() + Winfo::block_size / 2) % Winfo::block_size - Winfo::block_size / 2; // values: [-32; 32], 0 is middle
-//	int *spriteEdgeGridCoord;
-//	Mineral touchedBlock;
-//	//Map::TexturePath touchedPath;
-//
-//	if (player_x_pos_on_block + Gsettings::step >= 20) { // player touch right wall
-//		// if it happens, we need to check if that wall is air or block
-//		// if air then move player, else move player as close as possible
-//		spriteEdgeGridCoord = Map::GetGridCordinates(cStepped.x + 20 /* sprite right edge */, cStepped.y);
-//		touchedBlock = m->GetMap()[spriteEdgeGridCoord[1]][spriteEdgeGridCoord[0]];
-//		//touchedPath = m->GetTexturePath(touchedBlock.getName());
-//		if (touchedBlock.getName() != "sky") { // then you have collition with a block
-//			p->SetX(touchedBlock.getX() * Winfo::block_size - 52);
-//			return;
-//		}
-//		//
-//	}
-//	else if (player_x_pos_on_block - Gsettings::step <= -20) { // player touch left wall
-//		spriteEdgeGridCoord = Map::GetGridCordinates(cStepped.x - 20 /* sprite left edge */, cStepped.y);
-//		touchedBlock = m->GetMap()[spriteEdgeGridCoord[1]][spriteEdgeGridCoord[0]];
-//		//touchedPath = m->GetTexturePath(touchedBlock.getName());
-//		if (touchedBlock.getName() != "sky") { // then you have collition with a block
-//			p->SetX((touchedBlock.getX() + 1) * Winfo::block_size - 12);
-//			return;
-//		}
-//	}
-//	p->DeltaX(cDelta.x); // if no collision found, move like default 
-//}
-
-
-//void Collision::MoveVertically(Map *m, Player *p, Coord cDelta) {
-//	int pretendedX = p->PosX() + cDelta.x + Winfo::block_size / 2,
-//		pretendedY = p->PosY() + cDelta.y + Winfo::block_size;
-//
-//	int *pretGridCoords = m->GetGridCordinates(pretendedX, pretendedY);
-//
-//	Mineral pretendedMineral = m->GetMap()[pretGridCoords[1]][pretGridCoords[0]];
-//	Map::TexturePath pretendedPath = m->GetTexturePath(pretendedMineral.getName());
-//	if (BlockList::SKY == pretendedPath.blockId)
-//		p->DeltaY(cDelta.y);
-//	else {
-//		if (p->PosY() % Winfo::block_size != 0) {
-//			p->SetCoords(p->PosX(), (pretendedMineral.getY() - 1) * Winfo::block_size);
-//		}
-//		//p->DeltaCoords(cDelta.x, 0);
-//		//std::cout << (p->PosX() + 32) % 64 << std::endl;
-//	}
-//}
-
 /*
 	Horizontal movement collision:
 	+ determine if player is more left/right

@@ -1,11 +1,15 @@
 #include "ModelObjects.h"
-#include "Models.h"
+#include "Models.h" // Dont move to header!
 
+/*
+___________ START Model Constructors __________
+*/
 InventoryItemModel::InventoryItemModel() {
 	player_id = 0;
 	mineral_id = 0;
 	quantity = 0;
 }
+
 InventoryItemModel::InventoryItemModel(int m_player_id, int m_mineral_id, int m_quantity) {
 	player_id = m_player_id;
 	mineral_id = m_mineral_id;
@@ -22,6 +26,7 @@ PlayerModel::PlayerModel() {
 	player_name = "undefined";
 	health = 0;
 }
+
 PlayerModel::PlayerModel(int id, int drill, int engine, int hull, int fuel_tank, int backpack, int balance, std::string name, int health, std::string json_map) {
 	player_id = id;
 	drill_level = drill;
@@ -32,6 +37,7 @@ PlayerModel::PlayerModel(int id, int drill, int engine, int hull, int fuel_tank,
 	player_name = name;
 	this->health = health;
 }
+
 PlayerModel::PlayerModel(int id, int *upgrades, int balance, std::string name, int health, std::string json_map) {
 	player_id = id;
 	drill_level = upgrades[0];
@@ -43,24 +49,6 @@ PlayerModel::PlayerModel(int id, int *upgrades, int balance, std::string name, i
 	this->balance = balance;
 	player_name = name;
 	this->health = health;
-}
-
-int PlayerModel::getItemsCount() { 
-	return (*getInventory()).size();
-}
-
-std::vector<InventoryItemModel> *PlayerModel::getInventory() {
-	if (inventory.size() != 0)
-		return &inventory;
-	else { // inventory is not loaded, request for it!
-		inventory = Models::getInstance()->getInventoryById(player_id);
-		return &inventory;
-	}
-}
-
-void PlayerModel::addItem(InventoryItemModel item) {
-	getInventory(); // updates if empty
-	inventory.push_back(item);
 }
 
 MapModel::MapModel(int player_id, std::string json_value) {
@@ -100,4 +88,25 @@ MineralModel::MineralModel(int id, std::string name, int price, int weight, int 
 	this->frequency = frequency;
 	this->strength = strength;
 	this->texture_path = texture_path;
+}
+/*
+___________ END Model Constructors __________
+*/
+
+int PlayerModel::getItemsCount() { 
+	return (*getInventory()).size();
+}
+
+std::vector<InventoryItemModel> *PlayerModel::getInventory() {
+	if (inventory.size() != 0)
+		return &inventory;
+	else { // inventory is not loaded, request for it!
+		inventory = Models::getInstance()->getInventoryById(player_id);
+		return &inventory;
+	}
+}
+
+void PlayerModel::addItem(InventoryItemModel item) {
+	getInventory(); // updates if empty
+	inventory.push_back(item);
 }

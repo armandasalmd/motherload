@@ -1,5 +1,4 @@
 #pragma once
-
 #include "TextureManager.h"
 #include "SDL_ttf.h"
 #include <iostream>
@@ -11,27 +10,14 @@
 #include "Game.h"
 #include "BuildingManager.h"
 
-Map *map;
-TextureObject *background;
-Player *player;
-Camera *cam;
 BuildingManager *buildings;
-
+Camera *cam;
+Map *map;
+Player *player;
+TextureObject *background;
 SDL_Renderer *Game::renderer = nullptr;
 
-Game::Game() {
-	/*PlayerModel pModel = Models::getInstance()->getPlayerById(2);
-	std::vector<InventoryItemModel> *inventory = pModel.getInventory();
-	std::cout << inventory->size() << std::endl;
-	InventoryItemModel newItem = InventoryItemModel(2, 5, 2);
-	inventory->push_back(newItem);
-	
-	std::cout << inventory->size() << std::endl;
-	std::cout << pModel.getInventory()->size() << std::endl;*/
-}
-Game::~Game() {
-	
-}
+Game::Game() {}
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int player_id) {
 	// Preparing game objects
@@ -185,4 +171,12 @@ void Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 	std::cout << "Game cleaned" << std::endl;
+}
+
+void Game::setState(State s) {
+	// bool: wait for InGame state to be set
+	if (haltForInGame && s == State::InGame)
+		haltForInGame = false;
+	else
+		gameState = s; // GasStation
 }

@@ -1,3 +1,7 @@
+// <summary>Class that acts like proxy and handles database queries</summary>
+// <remarks>Every request(get method) returns Model Object(s)</remarks>
+// <author>barkausa</author>
+
 #pragma once
 #include "sqlite3.h"
 #include "mysqlite.hpp"
@@ -9,21 +13,19 @@
 #include <iostream>
 #include <vector>
 
-#ifndef MODEL_DATABASE_FILENAME
-#define MODEL_DATABASE_FILENAME Winfo::db_name
-#endif
-
 class Models {
 
 public:
+	// Singleton based instance
 	static Models *getInstance();
+	// Deconstructor
 	~Models();
 
+	// Basic query excutions
 	bool queryFile(std::string query_file);
 	bool queryString(std::string sql);
 
-	//void savePlayerAndInventory();
-
+	// Getters (funcs grabs data from database)
 	UpgradeModel getUpgradeById(std::string upgradeTable, int id);
 	PlayerModel getPlayerById(int id);
 	MineralModel getMineralById(int id);
@@ -31,24 +33,12 @@ public:
 	BuildingModel getBuildingById(int id);
 	std::vector<InventoryItemModel> getInventoryById(int player_id);
 
-	void updatePlayerInventory(PlayerModel *player);
-
+	/// TODO: void savePlayerAndInventory();
 private:
 	Models();
 	static Models* instance;
 	sqlite3 *db;
-	int qResult; // query result
-
+	int qResult;	// query status
+	// Function: Console print out SELECT output
 	static int callback(void *data, int argc, char **argv, char **azColName);
 };
-
-//
-//#define MODELS_DATABASE_FILENAME "mockdatabase.sqlite"
-//#include "Models.h"
-//
-//
-//TEST_CASE()
-//{
-//	Models( "mockdatabase.sqlite" )
-//	{}
-//}

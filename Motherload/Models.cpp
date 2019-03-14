@@ -1,8 +1,6 @@
 #include "Models.h"
-//#include "C:\Dev\Motherload\Motherload\Models.h"
 
-/* null, it will be initialized on first call */
-Models* Models::instance = 0;
+Models* Models::instance = 0; // setting default value
 
 Models* Models::getInstance() {
 	if (instance == 0)
@@ -230,12 +228,4 @@ std::vector<InventoryItemModel> Models::getInventoryById(int player_id) {
 		std::cerr << e.what() << std::endl;
 		return items;
 	}
-}
-
-void Models::updatePlayerInventory(PlayerModel *player) {
-
-	//std::string query1 = "DELETE FROM InventoryItems WHERE player_id=" + std::to_string(player->getPlayerId()) + ";";
-
-
-
 }

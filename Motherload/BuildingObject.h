@@ -1,36 +1,29 @@
+// <summary>Instance class for every building with drawing functionality</summary>
+// <author>barkausa</author>
+
 #pragma once
 #include <string>
 #include "ModelObjects.h"
-#include "TextureObject.h"
 #include "StaticVars.h"
-//#include <iostream>
+#include "TextureObject.h"
 
 class BuildingObject : public TextureObject {
-
 public:
-
-
+	// __________ Constructors __________
 	BuildingObject() : TextureObject("") {  };
+	BuildingObject(BuildingModel model);
 
-	BuildingObject(BuildingModel model) : TextureObject(model.getTexturePath().c_str()) {
-		
-		mModel = model;
-		posx = model.getBuildingX() * Winfo::block_size;
-		posy = model.getBuildingY() * Winfo::block_size;
-	}
-
-
-	void SetPosCoords(int x, int y) { posx = x, posy = y; }
-	void SetX(int x) { posx = x; }
-	void SetY(int y) { posy = y; }
-	int PosX() { return posx; }
-	int PosY() { return posy; }
-	BuildingModel GetModel() { return mModel; }
-
+	// __________ Setters __________
+	inline void SetPosCoords(int x, int y) { posx = x, posy = y; }
+	inline void SetX(int x) { posx = x; }
+	inline void SetY(int y) { posy = y; }
+	// __________ Getters __________
+	inline int PosX() { return posx; }
+	inline int PosY() { return posy; }
+	inline BuildingModel GetModel() { return mModel; }
 private:
 	BuildingModel mModel;
 	int posx, posy; // coordinates on the map
-
 };
 
 

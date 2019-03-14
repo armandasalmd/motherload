@@ -1,9 +1,7 @@
 #pragma once
 #include "Camera.h"
-#include <iostream>
 
 Camera::Camera(Game *game, Player *player, TextureObject *background, BuildingManager *buildings) {
-
 	this->game = game;
 	this->player = player;
 	this->background = background;
@@ -36,8 +34,8 @@ void Camera::UpdateAll() {
 
 void Camera::RenderAll() {
 	// this function renders all objects
-	// map->DrawMap();
 	RenderBg();
+	RenderBuildings();
 	RenderPlayer();
 }
 
