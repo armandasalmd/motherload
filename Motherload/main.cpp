@@ -12,7 +12,12 @@ Game *game = nullptr;
 
 void RenderGame(int fps);
 
-int main(int argc, char *argv[]) {	
+// <reference source="YouTube" 
+//		author="Let's Make Games" 
+//		comment="Game loop, fps limitation"
+//		href="https://www.youtube.com/channel/UCAM9ZPgEIdeHAsmG50wqL1g">
+int main(int argc, char *argv[]) {
+	
 	Uint32 frameStart;
 	int frameTime;
 	int fps = Winfo::FPS;
@@ -46,6 +51,7 @@ int main(int argc, char *argv[]) {
 	delete Models::getInstance();
 	return 0;	   // game closed
 }
+// </reference>
 
 
 void RenderGame(int fps) {

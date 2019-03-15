@@ -19,6 +19,10 @@ SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}
 
+// <reference source="YouTube" 
+//		author="Let's Make Games" 
+//		comment="Game preparation"
+//		href="https://www.youtube.com/watch?v=44tO977slsU">
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int player_id) {
 	// Preparing game objects
 	int flags = 0;
@@ -42,6 +46,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	}
 	else
 		isRunning = false;
+	// </reference>
 
 	// Initializing/loading textures of game objects
 	background = new TextureObject("assets/background.png");
@@ -62,6 +67,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::printText(std::string text, int text_size, int x, int y) {
+	// <reference source="Stack overflow" 
+	//		author="jpw" 
+	//		comment="Text rendering"
+	//		href="https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2">
 	TTF_Font* font = TTF_OpenFont("Sans.ttf", text_size);
 	SDL_Color textColor = { 255, 255, 255, 0 };
 	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
@@ -72,6 +81,7 @@ void Game::printText(std::string text, int text_size, int x, int y) {
 	SDL_Rect renderQuad = { x, y, text_width, text_height };
 	SDL_RenderCopy(renderer, textt, NULL, &renderQuad);
 	SDL_DestroyTexture(textt);
+	// </reference>
 	TTF_CloseFont(font);
 }
 
@@ -80,8 +90,6 @@ void Game::printText(std::string text, int x, int y) {
 }
 
 void Game::printToolbar(int fps) {
-	//printText("Fuel: 6l/10l", 5, Winfo::text_size);
-	//printText("Money: 55£", 5, Winfo::text_size * 2);
 	int *mCord = Map::GetGridCordinates(player->PosX() + Winfo::block_size / 2, player->PosY() + Winfo::block_size / 2);
 	std::string line3 = "x:" + std::to_string(mCord[0]) + " y:" + std::to_string(mCord[1]);
 	printText(line3, 15, 5, 0);
@@ -89,13 +97,9 @@ void Game::printToolbar(int fps) {
 	printText(line4, 15, 5, Winfo::text_size);
 	std::string line5 = "FPS:" + std::to_string(fps);
 	printText(line5, 15, 5, Winfo::text_size * 2);
-
-
+	
 	printText("Balance: " + std::to_string(player->getPlayerBalance()), 15, 5, Winfo::text_size * 3);
 	printText("Fuel: " + std::to_string(player->getPlayerFuel()), 15, 5, Winfo::text_size * 4);
-	
-	
-	// delete mCord;
 }
 
 void Game::update() {
@@ -177,6 +181,6 @@ void Game::setState(State s) {
 	// bool: wait for InGame state to be set
 	if (haltForInGame && s == State::InGame)
 		haltForInGame = false;
-	else
-		gameState = s; // GasStation
+	else 
+		gameState = s;
 }

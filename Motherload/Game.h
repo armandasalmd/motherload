@@ -32,7 +32,7 @@ public:
 	void setState(State s);
 	
 	// __________ Getters __________
-	inline State getState() { return gameState; }
+	inline State getState() { return haltForInGame ? State::InGame : gameState;	}
 	inline char getXpress() { return x_key_pressed; }
 	inline char getYpress() { return y_key_pressed; }
 	inline bool running() { return isRunning; }
