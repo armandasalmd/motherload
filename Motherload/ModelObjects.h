@@ -2,6 +2,18 @@
 // <remarks>all models has custom printing func (operator<<)</remarks>
 // <author>barkausa</author>
 
+/*
+<reference source="Stack overflow" 
+	author="Flexo"
+	comment="Printing class object with COUT"
+	href="https://stackoverflow.com/questions/9994955/c-operator-print-object-address">
+		friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
+		{ 
+			return os << obj.mineral_id << " (qty " << obj.quantity << ")"; 
+		}
+</reference>
+*/
+
 #pragma once
 #include <string>
 #include <vector>
@@ -18,8 +30,7 @@ public:
 	// __________ COUT class __________
 	friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
 	{
-		os << obj.mineral_id << " (qty " << obj.quantity << ")";
-		return os;
+		return os << obj.mineral_id << " (qty " << obj.quantity << ")";;
 	}
 
 	// __________ Getters __________

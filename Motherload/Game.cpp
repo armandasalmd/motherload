@@ -70,7 +70,8 @@ void Game::printText(std::string text, int text_size, int x, int y) {
 	// <reference source="Stack overflow" 
 	//		author="jpw" 
 	//		comment="Text rendering"
-	//		href="https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2">
+	//		href="https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2"
+	//		accessed_on="15/02/2019">
 	TTF_Font* font = TTF_OpenFont("Sans.ttf", text_size);
 	SDL_Color textColor = { 255, 255, 255, 0 };
 	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);

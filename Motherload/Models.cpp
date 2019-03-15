@@ -1,3 +1,20 @@
+/*
+<remarks>
+	I use sqlite3 query example fragments from Coventry
+	University lecture slides
+	<reference source="Coventry university"
+			   author="Diana Hintea"
+			   module="4005CEM">
+		sqlite::sqlite db( "firefly.sqlite" );
+		auto cur = db.get_statement();
+		cur->set_sql( "SELECT * FROM staff;" );
+		cur->prepare();
+		while( cur->step() )
+			cout << cur->get_int(0) << endl;
+	</reference>
+</remarks>
+*/
+
 #include "Models.h"
 
 Models* Models::instance = 0; // setting default value
@@ -8,8 +25,8 @@ Models* Models::getInstance() {
 	return instance;
 }
 
-Models::Models() {
-	// Constructor
+Models::Models() { // Constructor
+	
 	qResult = sqlite3_open(Winfo::db_name.c_str(), &db);
 	if (qResult)
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -48,7 +65,11 @@ bool Models::queryFile(std::string query_file) {
 }
 
 bool Models::queryString(std::string sql) {
-	// REFERENCE BEGIN: https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
+	// <reference source="Tutorials point" 
+	//		author="Tutorials point"
+	//		title="Create a Table"
+	//		comment="Executes sql queries"
+	//		href="https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm">
 	char errorMsgStr[] = "Query error";
 	char *errorMsg = errorMsgStr;
 	qResult = sqlite3_exec(db, sql.c_str(), Models::callback, 0, &errorMsg); // execution
@@ -60,7 +81,7 @@ bool Models::queryString(std::string sql) {
 		//fprintf(stdout, "Query established successfully\n");
 		return true;
 	}
-	// REFERENCE END;
+	// </reference>
 	return false;
 }
 

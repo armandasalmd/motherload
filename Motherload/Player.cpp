@@ -24,20 +24,6 @@ void Player::loadPlayerModel(int player_id) {
 
 void Player::savePlayerModel() { // save to database
 	Models::getInstance()->savePlayerAndInventory(&pModel);
-	//Models::getInstance()->queryString("DELETE FROM Inventory WHERE player_id = " 
-	//	+ std::to_string(pModel.getPlayerId()) + ";"); // deletes old values
-	//if (pModel.getItemsCount() > 0) { // if inventory not empty
-	//	std::string sql = "INSERT INTO Inventory VALUES ";
-	//	std::vector<InventoryItemModel> *newItems = pModel.getInventory();
-	//	std::vector<InventoryItemModel>::iterator end = newItems->end();
-	//	for (std::vector<InventoryItemModel>::iterator it = newItems->begin(); it != end; it++)
-	//		sql += "(" + std::to_string(it->getPlayerId()) + "," + std::to_string(it->getMineralId()) + ","
-	//			+ std::to_string(it->getQuantity()) + "),";
-	//	sql.pop_back(); // pop last comma
-	//	sql.push_back(';'); // add ;
-	//	Models::getInstance()->queryString(sql);
-	//	//std::cout << sql << std::endl;
-	//}
 }
 
 PlayerModel Player::getPlayerModel() {

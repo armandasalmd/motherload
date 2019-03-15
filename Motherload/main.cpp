@@ -3,10 +3,8 @@
 // <collab>waheedi</collab>
 
 #include "SDL.h"
-#include "Models.h"
 #include "Game.h"
 #include "StaticVars.h"
-#include "sqlite3.h"
 
 Game *game = nullptr;
 
@@ -33,17 +31,17 @@ int main(int argc, char *argv[]) {
 	// Main game loop
 	while (game->running()) {
 		frameStart = SDL_GetTicks();
-		RenderGame(fps);
+		RenderGame(fps); // Render main game
 		frameTime = SDL_GetTicks() - frameStart;
 
 		// if frame loads to fast, delay to hold required FPS
 		if (Winfo::frameDelay > frameTime) 
 		{
 			SDL_Delay(Winfo::frameDelay - frameTime);
-			fps = Winfo::FPS;
+			fps = Winfo::FPS;		// Maximum fps
 		}
 		else
-			fps = 1000 / frameTime;
+			fps = 1000 / frameTime;	// Limited fps
 		// else: computer fall behind - do not delay
 	}
 	game->clean(); // destroy the Game
