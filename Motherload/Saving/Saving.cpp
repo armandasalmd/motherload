@@ -5,36 +5,36 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "Saving.cpp"
-#include "Map"
-#include <boost/archive/tmpdir.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/base_object.hpp>
-#include <boost/serialization/utility.hpp>
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/assume_abstract.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+#include "Map.h"
+#include <archive/tmpdir.hpp>
+#include <archive/text_iarchive.hpp>
+#include <archive/text_oarchive.hpp>
+#include <serialization/base_object.hpp>
+#include <serialization/utility.hpp>
+#include <serialization/list.hpp>
+#include <serialization/assume_abstract.hpp>
+#include <property_tree/ptree.hpp>
+#include <property_tree/json_parser.hpp>
 #include <modelObject>
 #include <models>
 
-using boost::property_tree::ptree;
-using boost::property_tree::read_json;
-using boost::property_tree::write_json;
+using property_tree::ptree;
+using property_tree::read_json;
+using property_tree::write_json;
 
 
 class Save
 {
+
     void ReadWrite() {
-    // Write json.
+    // Converts inputs to JSON
     ptree pt;
     pt.put ("test", "test");
     std::ostringstream buf; 
     write_json (buf, pt, false);
     std::string json = buf.str();
 
-    // Read json.
+    // Checks output
     ptree pt2;
     std::istringstream is (json);
     read_json (is, pt2);
@@ -61,7 +61,8 @@ public:
 
 class Update
 {
-    int main()
+    public:
+    int Update()
     {
         StderrLog log;
         Database db("localhost", "root", "", "modelObject", &log); // MySQL specific
@@ -77,7 +78,8 @@ class Update
 
 class Load
 {
-    int main()
+    public:
+    int Load()
     {
         StderrLog log;
         Database db("localhost", "root", "", "modelObject", &log); // MySQL specific
@@ -110,10 +112,11 @@ class Load
 
 class Save
 {
-    int main()
+    public:
+    int Save()
     {
         StderrLog log;
-        Database db("localhost", "root", "", "modelObject, &log); // MySQL specific
+        Database db("localhost", "root", "", "modelObject", &log); // MySQL specific
         if (!db.Connected())
         {
             printf("Database not connected - exiting\n");
