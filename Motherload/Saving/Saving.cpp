@@ -49,19 +49,17 @@ class Save
     write_json (buf, pt, false); 
     return buf.str();
     }
-
-}
-
-public:
+    public:
     
    Save_State(){;
     Save_State(int _d, int _m, float _s) : 
         degrees(_d), minutes(_m), seconds(_s)
    }
+}
 
-class Update
+
+struct Update
 {
-    public:
     int Update()
     {
         StderrLog log;
@@ -76,9 +74,8 @@ class Update
     }
 }
 
-class Load
+struct Load
 {
-    public:
     int Load()
     {
         StderrLog log;
@@ -110,9 +107,8 @@ class Load
     }
 }
 
-class Save
+struct Save
 {
-    public:
     int Save()
     {
         StderrLog log;
