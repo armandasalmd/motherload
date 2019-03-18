@@ -1,9 +1,7 @@
 #include "ModelObjects.h"
 #include "Models.h" // Dont move to header!
 
-/*
-___________ START Model Constructors __________
-*/
+// ------------ START Model Constructors ------------
 InventoryItemModel::InventoryItemModel() {
 	player_id = 0;
 	mineral_id = 0;
@@ -89,25 +87,26 @@ MineralModel::MineralModel(int id, std::string name, int price, int weight, int 
 	this->strength = strength;
 	this->texture_path = texture_path;
 }
-/*
-___________ END Model Constructors __________
-*/
+// --------------- END Model Constructors -------------
+
 
 int PlayerModel::getItemsCount() { 
+	// returns:
+	//		particular player's inventory items count
 	return (*getInventory()).size();
 }
 
 std::vector<InventoryItemModel> *PlayerModel::getInventory() {
 	if (inventory.size() != 0)
 		return &inventory;
-	else { // inventory is not loaded, request for it!
+	else { // inventory is not loaded from db, request for it!
 		inventory = Models::getInstance()->getInventoryById(player_id);
 		return &inventory;
 	}
 }
 
 void PlayerModel::addItem(InventoryItemModel item) {
-	if (getItemsCount() == 0)
-		getInventory();		// updates if empty
-	inventory.push_back(item);
+	if (getItemsCount() == 0) // inventory is not loaded from db
+		getInventory();	// request inventory from db
+	inventory.push_back(item); // add new item
 }

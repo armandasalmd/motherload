@@ -1,7 +1,3 @@
-// <summary>every class represents a table in database - table models</summary>
-// <remarks>all models has custom printing func (operator<<)</remarks>
-// <author>barkausa</author>
-
 #pragma once
 #include <string>
 #include <vector>
@@ -9,20 +5,26 @@
 // (prototype) Cyclic dependency between Models and ModelObjects
 class Models;
 
+// summary:
+//		every class represents a table in database - table models
+// remarks:
+//		all models has custom printing func (operator<<)
+// author:
+//		barkausa
 class InventoryItemModel {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	InventoryItemModel();
 	InventoryItemModel(int m_player_id, int m_mineral_id, int m_quantity);
 	
-	// __________ COUT class __________
+	// ------------- COUT class -------------
 	friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
 	{
 		os << obj.mineral_id << " (qty " << obj.quantity << ")";
 		return os;
 	}
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getPlayerId() { return player_id; }
 	inline int getMineralId() { return mineral_id; }
 	inline int getQuantity() { return quantity; }
@@ -36,16 +38,16 @@ private:
 
 class PlayerModel {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	PlayerModel();
 	PlayerModel(int id, int drill, int engine, int hull, int fuel_tank, int backpack, 
 		int balance, std::string name, int health, std::string json_map);
 	PlayerModel(int id, int *upgrades, int balance, std::string name, int health, std::string json_map);
 
-	// __________ Setters __________
+	// ------------- Setters -------------
 	void setInventory(std::vector<InventoryItemModel> items) { inventory = items; }
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getPlayerId() { return player_id; }
 	inline int getBalance() { return balance; }
 	inline std::string getPlayerName() { return player_name; }
@@ -54,10 +56,10 @@ public:
 	int getItemsCount();	// Current inventory item count
 	std::vector<InventoryItemModel> *getInventory();
 	
-	/* 
-	<param name="upgrade_name">selecting specific upgrade</param>
-	<returns>Returns requested upgrade level(int)</returns> 
-	*/
+	// param:
+	//		upgrade_name: selecting specific upgrade
+	// returns:
+	//		returns requested upgrade level(int)
 	int getUpgrade(const std::string upgrade_name) {
 		if (upgrade_name == "drill") return drill_level;
 		else if (upgrade_name == "hull") return hull_level;
@@ -67,11 +69,12 @@ public:
 		return 0;
 	}
 
-	// __________ Control funcs __________
-	/* 
-	<summary>adds mined block to player's inventory</summary>
-	<param name="item">mined block model</param> 
-	*/
+	// ------------- Control funcs -------------
+	
+	// summary:
+	//		adds mined block to player's inventory
+	// param:
+	//		item: mined block model
 	void addItem(InventoryItemModel item);
 private:
 	// Table attributes
@@ -86,10 +89,10 @@ private:
 
 class MapModel {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	MapModel(int player_id, std::string json_value);
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getPlayerId() { return player_id; }
 	inline std::string getJsonValue() { return json_value; }
 
@@ -103,18 +106,18 @@ private:
 
 class BuildingModel {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	BuildingModel();
 	BuildingModel(int id, std::string name, std::string texture_path, int bX, int bY, int width);
 
-	// __________ COUT class __________
+	// ------------- COUT class -------------
 	friend std::ostream& operator<<(std::ostream& os, const BuildingModel& obj)
 	{
 		os << obj.building_name << " (" << obj.building_id << ")";
 		return os;
 	}
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getId() { return building_id; }
 	inline std::string getName() { return building_name; }
 	inline std::string getTexturePath() { return texture_path; }
@@ -133,18 +136,18 @@ class UpgradeModel {
 	// This model is being used by:
 	// FuelTank, Backpack, Engine, Hull and Drill tables
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	UpgradeModel();
 	UpgradeModel(int mLevel, std::string mName, int mPrice, float mValue);
 
-	// __________ COUT class __________
+	// ------------- COUT class -------------
 	friend std::ostream& operator<<(std::ostream& os, const UpgradeModel& obj)
 	{
 		os << obj.name << " (" << obj.level << ")";
 		return os;
 	}
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getLevel() { return level; };
 	inline std::string getName() { return name; };
 	inline int getPrice() { return price; };
@@ -159,18 +162,18 @@ private:
 
 class MineralModel {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	MineralModel();
 	MineralModel(int id, std::string name, int price, int weight, int frequency, int strength, std::string texture_path);
 	
-	// __________ COUT class __________
+	// ------------- COUT class -------------
 	friend std::ostream& operator<<(std::ostream& os, const MineralModel& obj)
 	{
 		os << obj.mineral_name << " (" << obj.mineral_id << ")";
 		return os;
 	}
 
-	// __________ Getters __________
+	// ------------- Getters -------------
 	inline int getId() { return mineral_id; }
 	inline std::string getName() { return mineral_name; }
 	inline int getPrice() { return price; }

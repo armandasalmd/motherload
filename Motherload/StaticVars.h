@@ -1,15 +1,17 @@
-// <summary>Constant values stored in one file - game settings</summary>
-// <author>barkausa</author>
-
 #pragma once
 #include <string>
 
+// summary:
+//		Constant values stored in one file - game settings
+// author:
+//		barkausa
 namespace {
-	/* <summary>Numerating blocks from 0</summary> */
+	// summary:
+	//		Numerating blocks from 0
 	enum BlockList { SKY = 0, GRASS, DIRT, STONE, BRONZE, SILVER, IRON, GOLD, RUBY, EMERALD, DIAMOND };
 	struct Coord { int x = 0, y = 0; };
 
-	/* __________ Window parameters __________ */
+	/* ------------- Window parameters ------------- */
 	struct Winfo {
 		// window info, window settings(static)
 		static const std::string title;			// window title
@@ -32,7 +34,7 @@ namespace {
 	const std::string Winfo::title = "Motherload";
 	const std::string Winfo::db_name = "game.sqlite";
 
-	/* __________ Game settings __________ */
+	/* ------------- Game settings ------------- */
 	struct Gsettings {
 		static const int spawn_x = 7;	// spawn grid x coord
 		static const int spawn_y = 3;	// spawn grid y coord
@@ -45,7 +47,7 @@ namespace {
 	const double Gsettings::gravity = 0.8;
 	const double Gsettings::max_gravity_speed = 8.0;
 
-	/* __________ World/Map info __________ */
+	/* ------------- World/Map info ------------- */
 	struct WorldInfo {
 		// measures in blocks
 		static const int b_sky_height = 5;		// sky taken blocks

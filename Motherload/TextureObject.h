@@ -1,31 +1,35 @@
-// <summary>Class holds main info about object drawing(size, coordinates...)</summary>
-// <remarks>This class is parent(inherited) for Player, Block, Building objects </remarks>
-// <author>barkausa</author>
-
 #pragma once
 #include "Game.h"
 #include "StaticVars.h"
 
+// summary:
+//		Class holds main info about object 
+//		drawing(size, coordinates...)
+// remarks:
+//		This class is parent(inherited) for 
+//		Player, Block, Building objects
+// author:
+//		barkausa
 class TextureObject {
 public:
-	// __________ Constructors __________
+	// ------------ Constructors ------------
 	TextureObject(const char *path, int x, int y, bool anim);
 	TextureObject(const char *path);
 
-	// __________ Setters __________
+	// ------------ Setters ------------
 	void SetDrawCoords(const int x, const int y);
 	void SetOffset(const int dx, const int dy);		// shift camera
 	void SetDimentions(const int w, const int h);	// set object width, height
 
-	// __________ Getters __________
+	// ------------ Getters ------------
 	int getX();
 	int getY();
 	
-	// __________ Render funcs __________
+	// ------------ Render funcs ------------
 	void Update();
 	void Render();
 	
-	// __________ Texture manipulation __________
+	// ------------ Texture manipulation ------------
 	void Move(const int dx, const int dy);			// moves texture on the screen
 	void DeltaOffset(const int dx, const int dy);	// move offset
 	void ChangeTexture(const char *path);
@@ -37,11 +41,9 @@ protected:
 	int offsetX = 0;	// camera offset
 	int offsetY = 0;	// camera offset
 
-	// <remarks>implemented(working) but not used for now
 	bool animated = false;
 	int anim_speed = 250;
 	int anim_frames = 4;
-	// </remarks>
 
 	SDL_Texture *objTexture;
 	SDL_Rect srcRect, destRect;

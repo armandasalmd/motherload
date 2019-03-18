@@ -1,7 +1,21 @@
 #include "Models.h"
 
-Models* Models::instance = 0; // setting default value
+// remarks:
+//		I use sqlite3 query example fragments from Coventry
+//		University lecture slides
+//		reference:
+//			 source: Coventry university
+//			 author: Diana Hintea
+//			 module:4005CEM
+//		example:
+//			 sqlite::sqlite db( "firefly.sqlite" );
+//			 auto cur = db.get_statement();
+//			 cur->set_sql( "SELECT * FROM staff;" );
+//			 cur->prepare();
+//			 while( cur->step() )
+//				 cout << cur->get_int(0) << endl;
 
+Models* Models::instance = 0;	 // setting default value
 Models* Models::getInstance() {
 	if (instance == 0)
 		instance = new Models(); // Constructor
@@ -22,13 +36,18 @@ Models::~Models() {
 	fprintf(stderr, "Database closed\n");
 }
 
+// -------------------- START Reference -------------------
+//	source:  YouTube 
+//	comment: Printing SQL SELECT results
+//	href:	 https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
 int Models::callback(void *data, int argc, char **argv, char **azColName) {
-	// print one query feedback row
+	// prints single row of query feedback
 	for (int i = 0; i < argc; i++)
 		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
 	printf("\n");
 	return 0;
 }
+// ------------------ END reference -------------------
 
 bool Models::queryFile(std::string query_file) {
 	std::ifstream fd;
@@ -48,7 +67,10 @@ bool Models::queryFile(std::string query_file) {
 }
 
 bool Models::queryString(std::string sql) {
-	// REFERENCE BEGIN: https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
+	// -------------------- START Reference -------------------
+	//	source:  YouTube 
+	//	comment: Printing SQL SELECT results
+	//	href:	 https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
 	char errorMsgStr[] = "Query error";
 	char *errorMsg = errorMsgStr;
 	qResult = sqlite3_exec(db, sql.c_str(), Models::callback, 0, &errorMsg); // execution
@@ -56,18 +78,17 @@ bool Models::queryString(std::string sql) {
 		fprintf(stderr, "SQL error: %s\n", errorMsg);
 		sqlite3_free(errorMsg);
 	}
-	else {
-		//fprintf(stdout, "Query established successfully\n");
+	else
 		return true;
-	}
-	// REFERENCE END;
+	// ------------------ END reference -------------------
 	return false;
 }
 
 UpgradeModel Models::getUpgradeById(std::string upgradeTable, int id) {
 	try {
 		sqlite::sqlite mdb(Winfo::db_name.c_str());
-		std::string query = "SELECT * FROM " + upgradeTable + " WHERE level = " + std::to_string(id) + ";";
+		std::string query = "SELECT * FROM " + upgradeTable 
+					+ " WHERE level = " + std::to_string(id) + ";";
 		auto cur = mdb.get_statement();
 		int price;
 		double value;
@@ -92,7 +113,8 @@ UpgradeModel Models::getUpgradeById(std::string upgradeTable, int id) {
 PlayerModel Models::getPlayerById(int id) {
 	try {
 		sqlite::sqlite mdb(Winfo::db_name.c_str());
-		std::string query = "SELECT * FROM (Player INNER JOIN Map ON Player.player_id=Map.player_id) WHERE Player.player_id=" + std::to_string(id) + ";";
+		std::string query = "SELECT * FROM (Player INNER JOIN Map ON Player.player_id=Map.player_id) WHERE Player.player_id="
+							+ std::to_string(id) + ";";
 		auto cur = mdb.get_statement();
 
 		int upgrades[5] = { -1 };
@@ -232,7 +254,8 @@ std::vector<InventoryItemModel> Models::getInventoryById(int player_id) {
 
 void Models::savePlayer(PlayerModel *p) {
 	Models::getInstance()->queryString("DELETE FROM Player WHERE player_id="
-		+ std::to_string(p->getPlayerId()) + ";");
+		+ std::to_string(p->getPlayerId()) + ";"); // executing DELETE query
+	// collecting values for insertion:
 	std::string args[] = { std::to_string(p->getPlayerId()),
 		std::to_string(p->getUpgrade("drill")),
 		std::to_string(p->getUpgrade("hull")),
@@ -241,30 +264,33 @@ void Models::savePlayer(PlayerModel *p) {
 		std::to_string(p->getUpgrade("backpack")),
 		std::to_string(p->getBalance()),
 		std::to_string(p->getHealth()),
-		p->getPlayerName()
+		"'" + p->getPlayerName() + "'"
 	};
 	std::string sql_insert = "INSERT INTO Player VALUES ("; // ...);
+	// forming final INSERT QUERY - adding values
 	for (std::string str : args)
 		sql_insert.append(str + ",");
-	sql_insert.pop_back();
-	sql_insert.append(");");
-	Models::getInstance()->queryString(sql_insert);
-	//std::cout << sql_insert << std::endl;
+	sql_insert.pop_back();	 // removing last comma
+	sql_insert.append(");"); // adding );
+	Models::getInstance()->queryString(sql_insert); // executing INSERT query
+	// std::cout << sql_insert << std::endl;
 }
 
 void Models::saveInventory(PlayerModel *p) {
 	Models::getInstance()->queryString("DELETE FROM Inventory WHERE player_id = "
-		+ std::to_string(p->getPlayerId()) + ";"); // deletes old values
+		+ std::to_string(p->getPlayerId()) + ";"); // deleting old values
 	if (p->getItemsCount() > 0) { // if inventory not empty
-		std::string sql = "INSERT INTO Inventory VALUES ";
-		std::vector<InventoryItemModel> *newItems = p->getInventory();
+		std::string sql = "INSERT INTO Inventory VALUES "; 
+		std::vector<InventoryItemModel> *newItems = p->getInventory(); // items to update
 		std::vector<InventoryItemModel>::iterator end = newItems->end();
+		// forming final INSERT QUERY
 		for (std::vector<InventoryItemModel>::iterator it = newItems->begin(); it != end; it++)
-			sql += "(" + std::to_string(it->getPlayerId()) + "," + std::to_string(it->getMineralId()) + ","
-			+ std::to_string(it->getQuantity()) + "),";
-		sql.pop_back(); // pop last comma
+			sql += "(" + std::to_string(it->getPlayerId()) + "," 
+				+ std::to_string(it->getMineralId()) + ","
+				+ std::to_string(it->getQuantity()) + "),";
+		sql.pop_back();		// pop last comma
 		sql.push_back(';'); // add ;
-		Models::getInstance()->queryString(sql);
-		//std::cout << sql << std::endl;
+		Models::getInstance()->queryString(sql); // inserting new inventory values
+		// std::cout << sql << std::endl;
 	}
 }
