@@ -1,21 +1,23 @@
-// <summary>General player class responsible for its drawing on the map,
-//     coordnates manipulation and control of player model</summary>
-// <author>barkausa</author>
-// <collab>living11</collab>
-
 #pragma once
 #include "TextureObject.h"
 #include "ModelObjects.h"
 #include "Models.h"
 #include "Mineral.h"
 
+// summary:
+//		General player class responsible for its drawing on the map,
+//      coordnates manipulation and control of player model
+// author:
+//		barkausa
+// collaborator:
+//		living11
 class Player: public TextureObject {
 public:
-	// __________ Constructors __________
+	// ------------- Constructors -------------
 	Player(const char *path) : TextureObject(path) {}
 	Player(const char *path, int x, int y, bool anim) : TextureObject(path, x, y, anim) {}
 
-	// __________ Getters ___________
+	// ------------- Getters -------------
 	// Player absolute pixel coordinates
 	int PosX() { return positionX; }
 	int PosY() { return positionY; }
@@ -23,7 +25,7 @@ public:
 	bool IsInAir() { return in_air; }
 	PlayerModel getPlayerModel();
 	
-	// __________ Setters ___________
+	// ------------- Setters -------------
 	// Sets Player absolute map coordinates
 	void SetCoords(int x, int y);
 	void SetX(int x) { positionX = x; };
@@ -31,7 +33,7 @@ public:
 	// Set True if player is flying
 	void SetInAir(bool value) { in_air = value; }
 
-	// __________ Player Movement __________
+	// ------------- Player Movement -------------
 	// Change/Move player absolute(px) coordinates
 	void DeltaCoords(int dx, int dy) { SetCoords(positionX + dx, positionY + dy); }
 	void DeltaX(int dx) { SetCoords(positionX + dx, positionY); }
@@ -56,16 +58,22 @@ public:
 	void decreaseFuel(int fuelDecrease) { if (fuelAmount - fuelDecrease <= 0) { throw "Tank empty"; } else  fuelAmount = fuelAmount - fuelDecrease;  }
 	// ========== END collaborator: living11 ==========
 
-	// __________ Interaction with database __________
-	/* <summary>Loads player model into private var: pModel</summary> */
+	// ------------- Interaction with database -------------
+	
+	// summary:
+	//		Loads player model into private var: pModel
 	void loadPlayerModel(int player_id);
-	/* <summary>Saves player status and Inventory</summary> */
+
+	// summary:
+	//		Saves player status and Inventory
 	void savePlayerModel();
-	/* 
-	<summary>Adds item to game inventory</summary>
-	<remarks>It do not update DB</remarks>
-	<params name="item">mined mineral info</params>
-	*/
+
+	// summary:
+	//		Adds item to game inventory
+	// remarks:
+	//		It do not update DB
+	// param:
+	//		item: mined mineral info
 	void addMineralToInv(Mineral item);
 private:
 	int positionX = 0;	// player x absolute position(px) on the map

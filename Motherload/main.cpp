@@ -1,6 +1,7 @@
-// <summary>startup file, counts fps, runs main loop</summary>
-// <author>barkausa</author>
-// <collab>waheedi</collab>
+// summary:
+//		startup file, counts fps, runs main loop
+// author:
+//		barkausa
 
 #include "SDL.h"
 #include "Game.h"
@@ -10,25 +11,25 @@ Game *game = nullptr;
 
 void RenderGame(int fps);
 
-// <reference source="YouTube" 
-//		author="Let's Make Games" 
-//		comment="Game loop, fps limitation"
-//		href="https://www.youtube.com/channel/UCAM9ZPgEIdeHAsmG50wqL1g">
+// -------------------- START Reference -------------------
+//		source:  YouTube
+//		author:  Let's Make Games
+//		comment: Game loop, fps limitation
+//		href:	 https://www.youtube.com/channel/UCAM9ZPgEIdeHAsmG50wqL1g">
 int main(int argc, char *argv[]) {
-	
 	Uint32 frameStart;
 	int frameTime;
 	int fps = Winfo::FPS;
-	// If step > block: block collision is risky
+	// possible overstep, collision errors!
 	if (Gsettings::step > Winfo::block_size) {
 		std::cout << "Step size cannot be bigger than block size!" << std::endl;
 		return 1;
 	}
-	// Preparing game object
+	// preparing game object
 	game = new Game();
 	game->init(Winfo::title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		Winfo::width, Winfo::height, Winfo::full_screen, 2); // init game window!
-	// Main game loop
+	// main game loop
 	while (game->running()) {
 		frameStart = SDL_GetTicks();
 		RenderGame(fps); // Render main game
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]) {
 	delete Models::getInstance();
 	return 0;	   // game closed
 }
-// </reference>
+// ------------------ END reference -------------------
 
 
 void RenderGame(int fps) {

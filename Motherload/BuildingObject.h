@@ -1,24 +1,25 @@
-// <summary>Instance class for every building with drawing functionality</summary>
-// <author>barkausa</author>
-
 #pragma once
 #include <string>
 #include "ModelObjects.h"
 #include "StaticVars.h"
 #include "TextureObject.h"
 
+// summary:
+//		Instance class for every building with drawing functionality
+// author:
+//		barkausa
 class BuildingObject : public TextureObject {
 public:
-	// __________ Constructors __________
+	// --------------- Constructors --------------
 	BuildingObject() : TextureObject("") {  };
 	BuildingObject(BuildingModel model);
 
-	// __________ Setters __________
+	// ----------------- Setters --------------
 	inline void SetPosCoords(int x, int y) { posx = x, posy = y; }
 	inline void SetX(int x) { posx = x; }
 	inline void SetY(int y) { posy = y; }
 
-	// __________ Getters __________
+	// ----------------- Getters --------------
 	inline int PosX() { return posx; }
 	inline int PosY() { return posy; }
 	inline BuildingModel GetModel() { return mModel; }

@@ -10,3 +10,7 @@ x64/Debug/Motherload.pdb
 x64/Debug/UnitTest.exe
 x64/Debug/UnitTest.ilk
 x64/Debug/UnitTest.pdb
+
+libs/archive/*
+libs/property_tree/*
+libs/serialization/*
