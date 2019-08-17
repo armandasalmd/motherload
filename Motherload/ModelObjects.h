@@ -18,11 +18,11 @@ public:
 	InventoryItemModel(int m_player_id, int m_mineral_id, int m_quantity);
 	
 	// ------------- COUT class -------------
-	friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
+	/*friend std::ostream& operator<<(std::ostream& os, const InventoryItemModel& obj)
 	{
 		os << obj.mineral_id << " (qty " << obj.quantity << ")";
 		return os;
-	}
+	}*/
 
 	// ------------- Getters -------------
 	inline int getPlayerId() { return player_id; }
@@ -111,11 +111,11 @@ public:
 	BuildingModel(int id, std::string name, std::string texture_path, int bX, int bY, int width);
 
 	// ------------- COUT class -------------
-	friend std::ostream& operator<<(std::ostream& os, const BuildingModel& obj)
+	/*friend std::ostream& operator<<(std::ostream& os, const BuildingModel& obj)
 	{
 		os << obj.building_name << " (" << obj.building_id << ")";
 		return os;
-	}
+	}*/
 
 	// ------------- Getters -------------
 	inline int getId() { return building_id; }
@@ -141,11 +141,11 @@ public:
 	UpgradeModel(int mLevel, std::string mName, int mPrice, float mValue);
 
 	// ------------- COUT class -------------
-	friend std::ostream& operator<<(std::ostream& os, const UpgradeModel& obj)
+	/*friend std::ostream& operator<<(std::ostream& os, const UpgradeModel& obj)
 	{
 		os << obj.name << " (" << obj.level << ")";
 		return os;
-	}
+	}*/
 
 	// ------------- Getters -------------
 	inline int getLevel() { return level; };
@@ -167,11 +167,11 @@ public:
 	MineralModel(int id, std::string name, int price, int weight, int frequency, int strength, std::string texture_path);
 	
 	// ------------- COUT class -------------
-	friend std::ostream& operator<<(std::ostream& os, const MineralModel& obj)
+	/*friend std::ostream& operator<<(std::ostream& os, const MineralModel& obj)
 	{
 		os << obj.mineral_name << " (" << obj.mineral_id << ")";
 		return os;
-	}
+	}*/
 
 	// ------------- Getters -------------
 	inline int getId() { return mineral_id; }
