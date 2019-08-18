@@ -1,4 +1,5 @@
 ##Motherload
+
 Game project built with primitive C++ library - SDL2. As a university module project it was assessed: 93%
 
 **Tools used:** Visual Studio 2019, Sqlite3, SDL2
@@ -17,6 +18,8 @@ ___
 * Iterable containers such as ``vector<>``
 * SDL2 library
 * Critical thinking while building a game engine!
+
+___
 
 ### Sample view
 ![image cant be found](https://i.gyazo.com/98f5b6b6d4f818fc6edacc9c121628c1.png)
